@@ -1,0 +1,33 @@
+body {
+  background: linear-gradient(120deg, #0f172a, #111827);
+  color: white;
+}
+
+.card {
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.35);
+}
+
+.table-container {
+  background: rgba(0,0,0,.15);
+  padding: 12px;
+  border-radius: 16px;
+}
+
+iframe, video {
+  width: 260px;
+  border-radius: 10px;
+}
+
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  text-align: center !important;
+}

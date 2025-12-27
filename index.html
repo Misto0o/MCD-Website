@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minecraft Dungeons Submissions</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <section class="section">
+        <div class="container">
+
+            <h1 class="title has-text-centered has-text-white">
+                Minecraft Dungeons — Difficult Levels Submission Form
+            </h1>
+
+            <!-- Upload card -->
+            <div class="card my-5">
+                <div class="card-content">
+
+                    <h2 class="subtitle">Submit your video</h2>
+
+                    <form id="uploadForm">
+
+                        <div class="field">
+                            <label class="label">Name</label>
+                            <input id="nameInput" class="input" type="text" placeholder="Your name" required>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Video URL</label>
+                            <input id="urlInput" class="input" type="url"
+                                placeholder="Paste video link (YouTube, direct mp4, etc.)" required>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Mob Damage</label>
+                            <input id="descriptionInput" class="input" type="number" step="0.01"
+                                placeholder="Example: 10.52" required>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Mob Health</label>
+                            <input id="mobHealthInput" class="input" type="number" step="0.01"
+                                placeholder="Example: 9.62" required>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Platform</label>
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select id="platformSelect" required>
+                                        <option value="" disabled selected>Select your platform</option>
+                                        <option value="PC">PC</option>
+                                        <option value="Xbox">Xbox</option>
+                                        <option value="PlayStation">PlayStation</option>
+                                        <option value="Nintendo Switch">Nintendo Switch</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="button is-primary" type="submit">
+                            Submit
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+
+            <h2 class="title is-4">Submissions</h2>
+            <button class="delete-btn" data-id="DOCUMENT_ID">Delete</button>
+
+            <!-- TABLE -->
+            <div class="table-container">
+                <table class="table is-striped is-fullwidth" id="submissionsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Video</th>
+                            <th>Mob Damage</th>
+                            <th>Platform</th>
+                            <th>Mob Health</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>
