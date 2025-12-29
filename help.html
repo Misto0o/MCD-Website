@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCD Calculator Reference Guide</title>
+    <link rel="stylesheet" href="help.css">
+    <link rel="icon" type="image/png" href="mcdLogo\favicon.ico" />
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Minecraft Dungeons Submissions — Show Off Your Gameplay!" />
+    <meta name="description"
+        content="Submit and explore Minecraft Dungeons gameplay videos! Share your dungeon runs, gear, and strategies with the community." />
+    <meta name="keywords"
+        content="Minecraft Dungeons, MCD, video submissions, gameplay videos, dungeon runs, Minecraft, community submissions" />
+    <meta name="author" content="Kristian Cook" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mcdvault.netlify.app/help" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎮 MCD Calculator Reference Guide</h1>
+        <p class="subtitle">Everything you need to know about calculating effective mob difficulty</p>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('chart')">📊 Multiplier Chart</button>
+            <button class="tab" onclick="showTab('howto')">📖 How It Works</button>
+            <button class="tab" onclick="showTab('examples')">💡 Examples</button>
+        </div>
+
+        <!-- TAB 1: CHART -->
+        <div id="chart" class="tab-content active">
+            <div class="chart-section">
+                <h2>📊 Individual Modifiers</h2>
+                <div class="multiplier-grid">
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x1</div>
+                        <div class="multiplier-value">25% increase</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x2</div>
+                        <div class="multiplier-value">25% increase</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x3</div>
+                        <div class="multiplier-value">25% increase</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Trial I</div>
+                        <div class="multiplier-value">7.7% increase</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Trial II</div>
+                        <div class="multiplier-value">25% increase</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Trial III</div>
+                        <div class="multiplier-value">45% increase</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h2>🔥 Combined Multipliers (Use These In The Form!)</h2>
+                <div class="multiplier-grid">
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Trial I</div>
+                        <div class="multiplier-value">1.077</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x1</div>
+                        <div class="multiplier-value">1.25</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x1 + Trial I</div>
+                        <div class="multiplier-value">1.346</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x2</div>
+                        <div class="multiplier-value">1.563</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x2 + Trial I</div>
+                        <div class="multiplier-value">1.683</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x1 + Trial II</div>
+                        <div class="multiplier-value">1.683</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x3</div>
+                        <div class="multiplier-value">1.953</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Trial III</div>
+                        <div class="multiplier-value">1.953</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x3 + Trial I</div>
+                        <div class="multiplier-value">2.104</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x2 + Trial II</div>
+                        <div class="multiplier-value">2.104</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x1 + Trial III</div>
+                        <div class="multiplier-value">2.441</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x3 + Trial II</div>
+                        <div class="multiplier-value">2.629</div>
+                    </div>
+                    <div class="multiplier-item">
+                        <div class="multiplier-name">Threat x2 + Trial III</div>
+                        <div class="multiplier-value">3.052</div>
+                    </div>
+                    <div class="multiplier-item" style="border-left: 4px solid #f39c12;">
+                        <div class="multiplier-name">⭐ Threat x3 + Trial III</div>
+                        <div class="multiplier-value">3.814</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Quick Tip:</strong> Find your Trial + Threat Banner combination above and use that exact
+                multiplier value in the submission form. For example, if you're playing with Threat x3 + Trial III,
+                enter <strong>3.814</strong> as your multiplier.
+            </div>
+        </div>
+
+        <!-- TAB 2: HOW IT WORKS -->
+        <div id="howto" class="tab-content">
+            <div class="chart-section">
+                <h2>🧮 The Math Behind It</h2>
+
+                <div class="formula-box">
+                    <div class="formula-title">Effective Mob Damage Formula:</div>
+                    <div class="formula">
+                        Mob Damage = (Trial Multiplier × Mob Health Multiplier) ÷ Armor Ratio
+                    </div>
+                    <div class="formula">
+                        Armor Ratio = (Your Armor Health + 100) ÷ (1,917,147)
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <div class="formula-title">Effective Mob Health Formula:</div>
+                    <div class="formula">
+                        Mob Health = (Trial Multiplier × Mob Health Multiplier) ÷ Weapon Ratio
+                    </div>
+                    <div class="formula">
+                        Weapon Ratio = (Your Weapon Damage + 100) ÷ (Base Weapon Damage + 100)
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>📝 Notes:</strong><br>
+                    • <code>1,917,147</code> is the base health for ALL armor at power level 251<br>
+                    • <code>Base Weapon Damage</code> varies by weapon type (that's why you select it in the
+                    dropdown)<br>
+                    • The <code>+100</code> is added to both values for proper scaling<br>
+                    • <code>Mob Health Multiplier</code> = 1 + (Mob Health % ÷ 100)
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h2>📋 What You Need</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Armor Health:</strong> The <code>+Health</code> number shown on your armor (enter WITHOUT
+                    commas)
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Weapon Type:</strong> Select the EXACT weapon you're using from the dropdown
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Weapon Damage:</strong> The damage number shown on your weapon (enter WITHOUT commas)
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Trial Multiplier:</strong> Find your combo in the chart above
+                </div>
+                <div class="step">
+                    <span class="step-number">5</span>
+                    <strong>Mob Health %:</strong> The percentage modifier (e.g., 120 for +120%)
+                </div>
+                <div class="step">
+                    <span class="step-number">6</span>
+                    <strong>Mob Damage %:</strong> The percentage modifier (e.g., 90 for +90%)
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: EXAMPLES -->
+        <div id="examples" class="tab-content">
+            <div class="example-box">
+                <div class="example-title">📌 Example 1</div>
+                <div class="step">
+                    <span class="step-number">📊</span>
+                    <strong>Setup:</strong><br>
+                    • Armor: 3,000,850 health<br>
+                    • Weapon: Cursed Axe with 1,200,360 damage<br>
+                    • Trial: Threat x3 + Trial III (multiplier = 3.814)<br>
+                    • Mob Health: +120% (multiplier = 2.2)<br>
+                    • Mob Damage: +90% (multiplier = 1.9)
+                </div>
+
+                <div class="step">
+                    <span class="step-number">🧮</span>
+                    <strong>Mob Damage Calculation:</strong><br>
+                    Armor Ratio = (3,000,850 + 100) ÷ 1,917,147 = <code>1.5653</code><br>
+                    Mob Damage = (3.814 × 2.2) ÷ 1.5653 = <strong>5.360x</strong>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">🧮</span>
+                    <strong>Mob Health Calculation:</strong><br>
+                    Base Cursed Axe Damage = <code>766,839</code><br>
+                    Weapon Ratio = (1,200,360 + 100) ÷ (766,839 + 100) = <code>1.5649</code><br>
+                    Mob Health = (3.814 × 2.2) ÷ 1.5649 = <strong>5.361x</strong>
+                </div>
+
+                <div class="success-box">
+                    <strong>✅ Result:</strong> This player is facing mobs with 5.36x effective damage and 5.36x
+                    effective health compared to baseline!
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📌 Example 2</div>
+                <div class="step">
+                    <span class="step-number">📊</span>
+                    <strong>Setup:</strong><br>
+                    • Armor: 1,859,343 health<br>
+                    • Weapon: Anchor with 1,803,076 damage<br>
+                    • Trial: Threat x3 + Trial III (multiplier = 3.814)<br>
+                    • Mob Health: +170% (multiplier = 2.7)<br>
+                    • Additional: -20% player damage banner (1.25x)
+                </div>
+
+                <div class="step">
+                    <span class="step-number">🧮</span>
+                    <strong>Calculations:</strong><br>
+                    Armor Ratio = (1,859,343 + 100) ÷ 1,917,147 = <code>0.9698</code><br>
+                    Mob Damage = (3.814 × 2.7) ÷ 0.9698 = <strong>10.62x</strong> (simplified example)
+                </div>
+
+                <div class="step">
+                    <span class="step-number">🧮</span>
+                    Base Anchor = <code>1,825,077</code><br>
+                    Weapon Ratio = (1,803,076 + 100) ÷ (1,825,077 + 100) = <code>0.9879</code><br>
+                    Mob Health = (3.814 × 2.7 × 1.25) ÷ 0.9879 = <strong>13.03x</strong>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Pro Tips:</strong><br>
+                • Always enter numbers WITHOUT commas (use 3000850, not 3,000,850)<br>
+                • Make sure to select the correct weapon type from the dropdown<br>
+                • The Trial Multiplier is the most important number - double check it!<br>
+                • Higher ratios = easier gameplay (you're stronger relative to base)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+
+</html>

@@ -25,7 +25,6 @@
 <body>
     <section class="section">
         <div class="container">
-
             <h1 class="title has-text-centered has-text-white">
                 Minecraft Dungeons — Difficult Levels Submission Form
             </h1>
@@ -59,73 +58,141 @@
                 </div>
             </div>
 
-            <!-- Upload card -->
+            <div class="card my-5">
+                <div class="card-content has-text-centered">
+                    <h2 class="subtitle">Need Help?</h2>
+                    <p class="mb-3">Not sure what multiplier to use? Check out the reference guide!</p>
+                    <a href="help.html" target="_blank" class="button is-link is-medium">
+                        📊 View Trial + Threat Banner Chart & Calculator Guide
+                    </a>
+                </div>
+            </div>
+
             <div class="card my-5">
                 <div class="card-content">
-
                     <h2 class="subtitle">Submit your video</h2>
-
                     <form id="uploadForm">
 
                         <div class="field">
                             <label class="label">Name</label>
-                            <input id="nameInput" class="input" type="text" placeholder="Your name" required>
+                            <input id="nameInput" class="input" type="text" required>
                         </div>
 
                         <div class="field">
                             <label class="label">Video URL</label>
-                            <input id="urlInput" class="input" type="url"
-                                placeholder="Paste video link (YouTube, direct mp4, etc.)" required>
+                            <input id="urlInput" class="input" type="url" required>
+                        </div>
+
+                        <h3 class="subtitle is-6">Gear Stats</h3>
+
+                        <div class="field">
+                            <label class="label">Armor Health</label>
+                            <input id="armorHealthInput" class="input" type="number" required
+                                placeholder="Enter the +Health from your armor (no commas)">
                         </div>
 
                         <div class="field">
-                            <label class="label">Mob Damage</label>
-                            <input id="descriptionInput" class="input" type="number" step="0.01"
-                                placeholder="Example: 10.52" required>
+                            <label class="label">Melee Weapon Damage</label>
+                            <input id="meleeDamageInput" class="input" type="number" required
+                                placeholder="Enter the LOWER number of your damage range (no commas)">
+                        </div>
+
+
+                        <div class="field">
+                            <label class="label">Melee Weapon Type</label>
+                            <div class="select is-fullwidth">
+                                <select id="meleeTypeSelect" required
+                                    aria-placeholder="Make sure to pick the CORRECT Melee item or the calculations will be wrong!">
+                                    <option value="" disabled selected>Select melee weapon</option>
+
+                                    <option value="anchor">Anchor / Encrusted Anchor</option>
+                                    <option value="axe">Axe / Firebrand / Highland Axe</option>
+                                    <option value="backstabber">Backstabber / Swift Striker</option>
+                                    <option value="bone_club">Bone Club / Bone Cudgel</option>
+                                    <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
+                                    <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost Slayer /
+                                        Heartstealer</option>
+                                    <option value="coral_blade">Coral Blade / Sponge Striker</option>
+                                    <option value="cutlass">Cutlass / Nameless Blade</option>
+                                    <option value="cursed_axe">Cursed Axe / Whirlwind</option>
+                                    <option value="daggers">Daggers / Fangs of Frost / Shear Daggers / Moon Daggers
+                                    </option>
+                                    <option value="dancers_sword">Dancers Sword / Sparkler</option>
+                                    <option value="fighters_bindings">Fighters Bindings</option>
+                                    <option value="freezing_foil">Freezing Foil</option>
+                                    <option value="gauntlets">Gauntlets / Maulers / Soul Fist</option>
+                                    <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom</option>
+                                    <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
+                                    <option value="katana">Katana / Dark Katana / Masters Katana</option>
+                                    <option value="mace">Mace / Flail / Suns Grace</option>
+                                    <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
+                                    <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
+                                    <option value="rapier">Rapier / Bee Stinger</option>
+                                    <option value="sickles">Sickles / The Last Laugh / Nightmare Bites</option>
+                                    <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
+                                    <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe / Skull
+                                        Scythe</option>
+                                    <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill Spear
+                                    </option>
+                                    <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff</option>
+                                    <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword</option>
+                                    <option value="tempest_knife">Tempest Knife / Resolute Tempest Knife / Chill Gale
+                                        Knife</option>
+                                    <option value="void_touched">Void Touched Blades / Beginning and End</option>
+                                    <option value="whip">Whip / Vine Whip</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 class="subtitle is-6">Gameplay Stats</h3>
+
+                        <div class="field">
+                            <label class="label">Trial + Threat Banner Multiplier</label>
+                            <input id="trialMultiplierInput" class="input" type="number" step="0.001" value="1"
+                                required>
                         </div>
 
                         <div class="field">
-                            <label class="label">Mob Health</label>
-                            <input id="mobHealthInput" class="input" type="number" step="0.01"
-                                placeholder="Example: 9.62" required>
+                            <label class="label">Mob Health %</label>
+                            <input id="mobHealthInput" class="input" type="number" value="0" required>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Mob Damage %</label>
+                            <input id="mobDamageInput" class="input" type="number" value="0" required>
                         </div>
 
                         <div class="field">
                             <label class="label">Platform</label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select id="platformSelect" required>
-                                        <option value="" disabled selected>Select your platform</option>
-                                        <option value="PC">PC</option>
-                                        <option value="Xbox">Xbox</option>
-                                        <option value="PlayStation">PlayStation</option>
-                                        <option value="Nintendo Switch">Nintendo Switch</option>
-                                    </select>
-                                </div>
+                            <div class="select is-fullwidth">
+                                <select id="platformSelect" required>
+                                    <option value="" disabled selected>Select platform</option>
+                                    <option value="PC">PC</option>
+                                    <option value="Xbox">Xbox</option>
+                                    <option value="PlayStation">PlayStation</option>
+                                    <option value="Nintendo Switch">Nintendo Switch</option>
+                                </select>
                             </div>
                         </div>
 
-                        <button class="button is-primary" type="submit">
-                            Submit
-                        </button>
+                        <button class="button is-primary" type="submit">Submit</button>
 
                     </form>
                 </div>
             </div>
 
             <h2 class="title is-4">Submissions</h2>
-            <button class="delete-btn" data-id="DOCUMENT_ID">Delete</button>
 
-            <!-- TABLE -->
             <div class="table-container">
-                <table class="table is-striped is-fullwidth" id="submissionsTable">
+                <table class="table is-striped is-fullwidth">
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Video</th>
                             <th>Mob Damage</th>
-                            <th>Platform</th>
                             <th>Mob Health</th>
+                            <th>Platform</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="tableBody"></tbody>
@@ -133,9 +200,59 @@
             </div>
 
         </div>
+
+        <footer class="footer has-text-centered mt-5">
+            <div class="content has-text-white">
+                <p>
+                    &copy; 2024 Minecraft Dungeons Submissions. All rights reserved.
+                <h5 class="is-size-7">This site is a work in progress more updates will occur!</h5>
+                <h5 class="is-size-7">Site by Mist.</h5>
+                </p>
+            </div>
+
     </section>
 
-    <script src="script.js" type="module"></script>
+    <script type="module" src="script.js"></script>
+    <script>
+        // Register and setup cache-nuking service worker
+        if ('serviceWorker' in navigator) {
+            // Unregister any existing service workers first
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(reg => reg.unregister());
+            });
+
+            // Register the new one
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((registration) => {
+                    console.log('✅ Cache Nuker Service Worker registered!');
+                })
+                .catch((error) => {
+                    console.error('❌ Service Worker registration failed:', error);
+                });
+
+            // Listen for messages from service worker
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'CACHE_CLEARED') {
+                    console.log('💥 Caches have been cleared!');
+                    alert('Caches cleared! Page will reload.');
+                    window.location.reload();
+                }
+            });
+
+            // Make nukeCaches available globally after service worker is ready
+            navigator.serviceWorker.ready.then(() => {
+                window.nukeCaches = function () {
+                    if (navigator.serviceWorker.controller) {
+                        console.log('💣 Sending nuke command...');
+                        navigator.serviceWorker.controller.postMessage({ type: 'NUKE_CACHE' });
+                    } else {
+                        console.error('❌ No service worker controller available');
+                    }
+                };
+                console.log('✅ nukeCaches() is now available!');
+            });
+        }
+    </script>
 </body>
 
 </html>
