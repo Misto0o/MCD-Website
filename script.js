@@ -6,7 +6,6 @@ import {
     getAuth, signInAnonymously, setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
-// Firebase setup
 const firebaseConfig = {
     apiKey: "AIzaSyDp5NaCOo0I9DssodNecAilqCfSQsQV8hc",
     authDomain: "mcd-website-1a892.firebaseapp.com",
@@ -22,13 +21,11 @@ const auth = getAuth(app);
 await setPersistence(auth, browserLocalPersistence);
 if (!auth.currentUser) await signInAnonymously(auth);
 
-// ------------------ BUSTER'S BASE DAMAGE CHART ------------------
-const BASE_ARMOR_HEALTH = 1917047; // From Buster's chart (251 PL armor)
+const BASE_ARMOR_HEALTH = 1917047;
 
-// Weapon base damages at power level 251 (exact values from chart)
 const WEAPON_BASE_DAMAGES = {
     fighters_bindings: 191710,
-    daggers: 268394, // Using lower value from range
+    daggers: 268394,
     coral_blade: 145699,
     gauntlets: 191710,
     sawblade: 322072,
@@ -63,30 +60,31 @@ function calculateEffectiveMob(input) {
     const {
         trialMultiplier,
         mobHealthPercent,
+        mobDamagePercent,
+        playerDamageDecrease,
+        playerHealthIncrease,
         armorHealth,
         meleeType,
         meleeDamage
     } = input;
 
-    // Convert percentages to multipliers
     const mobHealthMultiplier = 1 + (mobHealthPercent / 100);
+    const mobDamageMultiplier = 1 + (mobDamagePercent / 100);
 
-    // Get base damage for weapon
+    let playerDamageBannerEffect = 1;
+    if (playerDamageDecrease !== 0) {
+        playerDamageBannerEffect = 1 / (1 + (playerDamageDecrease / 100));
+    }
+
+    const playerHealthMultiplier = playerHealthIncrease ? (1 + playerHealthIncrease / 100) : 1;
+
     const meleeBaseDamage = WEAPON_BASE_DAMAGES[meleeType] || 251;
 
-    // MOB DAMAGE CALCULATION
-    // Based on Buster's example: "divide by 1,917,147 = 1.56904139328 so you divide the final mob damage amount by 1.569"
-    // Formula: (trialMultiplier × mobHealthMultiplier) / armorRatio
-    // armorRatio = (playerArmor + 100) / (baseArmor + 100)
     const armorRatio = (armorHealth + 100) / (BASE_ARMOR_HEALTH + 100);
-    const effectiveMobDamage = (trialMultiplier * mobHealthMultiplier) / armorRatio;
+    const effectiveMobDamage = (trialMultiplier * mobDamageMultiplier) / (armorRatio * playerHealthMultiplier);
 
-    // MOB HEALTH CALCULATION
-    // Same logic as mob damage but for weapons
-    // Formula: (trialMultiplier × mobHealthMultiplier) / weaponRatio
-    // weaponRatio = (playerWeapon + 100) / (baseWeapon + 100)
     const weaponRatio = (meleeDamage + 100) / (meleeBaseDamage + 100);
-    const effectiveMobHealth = (trialMultiplier * mobHealthMultiplier) / weaponRatio;
+    const effectiveMobHealth = (trialMultiplier * mobHealthMultiplier * playerDamageBannerEffect) / weaponRatio;
 
     return {
         mobDamage: effectiveMobDamage,
@@ -94,7 +92,6 @@ function calculateEffectiveMob(input) {
     };
 }
 
-// ------------------ DOM ------------------
 const form = document.getElementById("uploadForm");
 const tableBody = document.getElementById("tableBody");
 
@@ -105,21 +102,20 @@ form.addEventListener("submit", async e => {
     const videoUrl = document.getElementById("urlInput").value.trim();
     const platform = document.getElementById("platformSelect").value;
 
-    // Optional fields - get values or empty string
     const armorHealth = document.getElementById("armorHealthInput").value.trim();
     const meleeType = document.getElementById("meleeTypeSelect").value;
     const meleeDamage = document.getElementById("meleeDamageInput").value.trim();
     const trialMultiplier = document.getElementById("trialMultiplierInput").value.trim();
+    const playerDamageDecrease = parseInt(document.getElementById("playerDamageDecreaseSelect").value);
+    const playerHealthIncrease = document.getElementById("playerHealthIncreaseInput").value.trim();
     const mobHealthPercent = document.getElementById("mobHealthInput").value.trim();
     const mobDamagePercent = document.getElementById("mobDamageInput").value.trim();
 
-    // Check required fields
     if (!name || !videoUrl || !platform) {
         alert("Please fill out Name, Video URL, and Platform.");
         return;
     }
 
-    // Check if ALL stat fields are filled
     const allStatsFilled =
         armorHealth &&
         meleeType &&
@@ -128,21 +124,20 @@ form.addEventListener("submit", async e => {
         mobHealthPercent !== '' &&
         mobDamagePercent !== '';
 
-    // Check if ANY stat fields are filled
     const anyStatsFilled =
         armorHealth ||
         meleeType ||
         meleeDamage ||
         trialMultiplier ||
+        playerDamageDecrease !== 0 ||
+        playerHealthIncrease ||
         mobHealthPercent !== '' ||
         mobDamagePercent !== '';
 
-    // If they started but didn't finish → stop them
     if (anyStatsFilled && !allStatsFilled) {
         alert("⚠️ If you enter stats, you must complete ALL stat fields — or leave them all blank.");
         return;
     }
-
 
     let mobDamage = null;
     let mobHealth = null;
@@ -151,7 +146,10 @@ form.addEventListener("submit", async e => {
     if (allStatsFilled) {
         const results = calculateEffectiveMob({
             trialMultiplier: parseFloat(trialMultiplier),
-            mobHealthPercent: parseFloat(mobHealthPercent),
+            mobHealthPercent: parseFloat(mobHealthPercent || 0),
+            mobDamagePercent: parseFloat(mobDamagePercent || 0),
+            playerDamageDecrease: playerDamageDecrease || 0,
+            playerHealthIncrease: parseFloat(playerHealthIncrease || 0),
             armorHealth: parseFloat(armorHealth),
             meleeType,
             meleeDamage: parseFloat(meleeDamage)
@@ -169,6 +167,8 @@ form.addEventListener("submit", async e => {
         meleeType: meleeType || null,
         meleeDamage: meleeDamage ? parseFloat(meleeDamage) : null,
         trialMultiplier: trialMultiplier ? parseFloat(trialMultiplier) : null,
+        playerDamageDecrease: playerDamageDecrease || null,
+        playerHealthIncrease: playerHealthIncrease ? parseFloat(playerHealthIncrease) : null,
         mobHealthPercent: mobHealthPercent !== '' ? parseFloat(mobHealthPercent) : null,
         mobDamagePercent: mobDamagePercent !== '' ? parseFloat(mobDamagePercent) : null,
         mobDamage,
@@ -182,7 +182,6 @@ form.addEventListener("submit", async e => {
     form.reset();
 });
 
-// ------------------ LISTEN + DISPLAY ------------------
 const q = query(collection(db, "submissions"), orderBy("createdAt", "desc"));
 onSnapshot(q, snapshot => {
     tableBody.innerHTML = "";
@@ -215,13 +214,10 @@ onSnapshot(q, snapshot => {
     });
 });
 
-// ------------------ HELPERS ------------------
 function detectEmbed(url) {
-    // YouTube handling
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
         let videoId = "";
 
-        // Handle different YouTube URL formats
         if (url.includes("watch?v=")) {
             videoId = url.split("watch?v=")[1].split("&")[0];
         } else if (url.includes("youtu.be/")) {
@@ -235,7 +231,6 @@ function detectEmbed(url) {
         }
     }
 
-    // For other video URLs, just show a link
     return `<a href="${url}" target="_blank" class="button is-small is-link">Watch Video</a>`;
 }
 
