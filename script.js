@@ -21,14 +21,14 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 await setPersistence(auth, browserLocalPersistence);
 if (!auth.currentUser) await signInAnonymously(auth);
-// ------------------ CALCULATIONS ------------------
-// Base armor health at power level 251 (exact value from chart)
+
+// ------------------ BUSTER'S BASE DAMAGE CHART ------------------
 const BASE_ARMOR_HEALTH = 1917047; // From Buster's chart (251 PL armor)
 
 // Weapon base damages at power level 251 (exact values from chart)
 const WEAPON_BASE_DAMAGES = {
     fighters_bindings: 191710,
-    daggers: 268394, // Using lower value from range may change to higher vaule if wrong
+    daggers: 268394, // Using lower value from range
     coral_blade: 145699,
     gauntlets: 191710,
     sawblade: 322072,
@@ -103,43 +103,82 @@ form.addEventListener("submit", async e => {
 
     const name = document.getElementById("nameInput").value.trim();
     const videoUrl = document.getElementById("urlInput").value.trim();
-    const armorHealth = parseFloat(document.getElementById("armorHealthInput").value);
-    const meleeType = document.getElementById("meleeTypeSelect").value;
-    const meleeDamage = parseFloat(document.getElementById("meleeDamageInput").value);
-    const trialMultiplier = parseFloat(document.getElementById("trialMultiplierInput").value);
-    const mobHealthPercent = parseFloat(document.getElementById("mobHealthInput").value || 0);
-    const mobDamagePercent = parseFloat(document.getElementById("mobDamageInput").value || 0);
     const platform = document.getElementById("platformSelect").value;
 
-    if (!name || !videoUrl || !trialMultiplier || !armorHealth || !meleeDamage || !meleeType) {
-        alert("Fill out all required fields.");
+    // Optional fields - get values or empty string
+    const armorHealth = document.getElementById("armorHealthInput").value.trim();
+    const meleeType = document.getElementById("meleeTypeSelect").value;
+    const meleeDamage = document.getElementById("meleeDamageInput").value.trim();
+    const trialMultiplier = document.getElementById("trialMultiplierInput").value.trim();
+    const mobHealthPercent = document.getElementById("mobHealthInput").value.trim();
+    const mobDamagePercent = document.getElementById("mobDamageInput").value.trim();
+
+    // Check required fields
+    if (!name || !videoUrl || !platform) {
+        alert("Please fill out Name, Video URL, and Platform.");
         return;
     }
 
-    const results = calculateEffectiveMob({
-        trialMultiplier,
-        mobHealthPercent,
-        armorHealth,
-        meleeType,
-        meleeDamage
-    });
+    // Check if ALL stat fields are filled
+    const allStatsFilled =
+        armorHealth &&
+        meleeType &&
+        meleeDamage &&
+        trialMultiplier &&
+        mobHealthPercent !== '' &&
+        mobDamagePercent !== '';
+
+    // Check if ANY stat fields are filled
+    const anyStatsFilled =
+        armorHealth ||
+        meleeType ||
+        meleeDamage ||
+        trialMultiplier ||
+        mobHealthPercent !== '' ||
+        mobDamagePercent !== '';
+
+    // If they started but didn't finish → stop them
+    if (anyStatsFilled && !allStatsFilled) {
+        alert("⚠️ If you enter stats, you must complete ALL stat fields — or leave them all blank.");
+        return;
+    }
+
+
+    let mobDamage = null;
+    let mobHealth = null;
+    let needsModeration = !allStatsFilled;
+
+    if (allStatsFilled) {
+        const results = calculateEffectiveMob({
+            trialMultiplier: parseFloat(trialMultiplier),
+            mobHealthPercent: parseFloat(mobHealthPercent),
+            armorHealth: parseFloat(armorHealth),
+            meleeType,
+            meleeDamage: parseFloat(meleeDamage)
+        });
+
+        mobDamage = results.mobDamage;
+        mobHealth = results.mobHealth;
+    }
 
     await addDoc(collection(db, "submissions"), {
         name,
         videoUrl,
         platform,
-        armorHealth,
-        meleeType,
-        meleeDamage,
-        trialMultiplier,
-        mobHealthPercent,
-        mobDamagePercent,
-        mobDamage: results.mobDamage,
-        mobHealth: results.mobHealth,
+        armorHealth: armorHealth ? parseFloat(armorHealth) : null,
+        meleeType: meleeType || null,
+        meleeDamage: meleeDamage ? parseFloat(meleeDamage) : null,
+        trialMultiplier: trialMultiplier ? parseFloat(trialMultiplier) : null,
+        mobHealthPercent: mobHealthPercent !== '' ? parseFloat(mobHealthPercent) : null,
+        mobDamagePercent: mobDamagePercent !== '' ? parseFloat(mobDamagePercent) : null,
+        mobDamage,
+        mobHealth,
+        needsModeration,
         userId: auth.currentUser?.uid,
         createdAt: Date.now()
     });
 
+    alert("✅ Submission successful!");
     form.reset();
 });
 
@@ -151,14 +190,24 @@ onSnapshot(q, snapshot => {
         const d = docSnap.data();
         const row = document.createElement("tr");
         const video = detectEmbed(d.videoUrl);
-        const mobDamage = d.mobDamage ?? 0;
-        const mobHealth = d.mobHealth ?? 0;
+
+        let mobDamageDisplay, mobHealthDisplay;
+
+        if (d.needsModeration) {
+            mobDamageDisplay = '<span class="tag is-warning">Pending Moderation</span>';
+            mobHealthDisplay = '<span class="tag is-warning">Pending Moderation</span>';
+        } else {
+            const mobDamage = d.mobDamage ?? 0;
+            const mobHealth = d.mobHealth ?? 0;
+            mobDamageDisplay = `${mobDamage.toFixed(2)}x`;
+            mobHealthDisplay = `${mobHealth.toFixed(2)}x`;
+        }
 
         row.innerHTML = `
             <td>${d.name}</td>
             <td>${video}</td>
-            <td>${mobDamage.toFixed(2)}x</td>
-            <td>${mobHealth.toFixed(2)}x</td>
+            <td>${mobDamageDisplay}</td>
+            <td>${mobHealthDisplay}</td>
             <td>${d.platform}</td>
             <td>${d.userId === auth.currentUser?.uid ? `<button class="button is-danger is-small delete-btn" data-id="${docSnap.id}">Delete</button>` : ""}</td>
         `;

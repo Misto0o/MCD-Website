@@ -47,9 +47,9 @@
                             <li>Accounts for the power level of gear used.</li>
                             <li>Players must show the gear used and level played.(Can be at the very start of the video
                                 before playing level of choice)</li>
-                            <li>Not hitless gameplay, so you must tank at least 370,151 base damage from a mob, or mobs
-                                before healing, not purposely. Examples: Normal zombie, husk, vindicator, or stronger
-                                mobs.</li>
+                            <li> Modded items are allowed if they don't give any combat advantage
+                                (cosmetic/gilded/visual only). Items that increase damage, defense,
+                                survivability, or otherwise make the run easier are not allowed.</li>
                             <li>You may switch items around as long as rules are followed.</li>
                             <li>Effective mob health must be ≥40% of effective mob damage.</li>
                             <li>Levels not allowed: The Stronghold, Squid Coast, ???.</li>
@@ -62,7 +62,7 @@
                 <div class="card-content has-text-centered">
                     <h2 class="subtitle">Need Help?</h2>
                     <p class="mb-3">Not sure what multiplier to use? Check out the reference guide!</p>
-                    <a href="help.html" target="_blank" class="button is-link is-medium">
+                    <a href="help.html" target="_blank" class="button is-link is-medium help-button">
                         📊 View Trial + Threat Banner Chart & Calculator Guide
                     </a>
                 </div>
@@ -83,83 +83,80 @@
                             <input id="urlInput" class="input" type="url" required>
                         </div>
 
-                        <h3 class="subtitle is-6">Gear Stats</h3>
+                        <h3 class="subtitle is-6">Gear Stats (Optional)</h3>
 
                         <div class="field">
-                            <label class="label">Armor Health</label>
-                            <input id="armorHealthInput" class="input" type="number" required
+                            <label class="label">Armor +Health</label>
+                            <input id="armorHealthInput" class="input" type="number"
                                 placeholder="Enter the +Health from your armor (no commas)">
                         </div>
 
                         <div class="field">
                             <label class="label">Melee Weapon Damage</label>
-                            <input id="meleeDamageInput" class="input" type="number" required
-                                placeholder="Enter the LOWER number of your damage range (no commas)">
+                            <input id="meleeDamageInput" class="input"
+                                placeholder="Enter the LOWER number of your damage range (no commas)" type="number">
                         </div>
-
 
                         <div class="field">
                             <label class="label">Melee Weapon Type</label>
                             <div class="select is-fullwidth">
-                                <select id="meleeTypeSelect" required
-                                    aria-placeholder="Make sure to pick the CORRECT Melee item or the calculations will be wrong!">
+                                <select id="meleeTypeSelect">
                                     <option value="" disabled selected>Select melee weapon</option>
-
-                                    <option value="anchor">Anchor / Encrusted Anchor</option>
-                                    <option value="axe">Axe / Firebrand / Highland Axe</option>
-                                    <option value="backstabber">Backstabber / Swift Striker</option>
-                                    <option value="bone_club">Bone Club / Bone Cudgel</option>
-                                    <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
-                                    <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost Slayer /
-                                        Heartstealer</option>
-                                    <option value="coral_blade">Coral Blade / Sponge Striker</option>
-                                    <option value="cutlass">Cutlass / Nameless Blade</option>
-                                    <option value="cursed_axe">Cursed Axe / Whirlwind</option>
+                                    <option value="fighters_bindings">Fighters Bindings</option>
                                     <option value="daggers">Daggers / Fangs of Frost / Shear Daggers / Moon Daggers
                                     </option>
-                                    <option value="dancers_sword">Dancers Sword / Sparkler</option>
-                                    <option value="fighters_bindings">Fighters Bindings</option>
-                                    <option value="freezing_foil">Freezing Foil</option>
+                                    <option value="coral_blade">Coral Blade / Sponge Striker</option>
                                     <option value="gauntlets">Gauntlets / Maulers / Soul Fist</option>
-                                    <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom</option>
-                                    <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
-                                    <option value="katana">Katana / Dark Katana / Masters Katana</option>
-                                    <option value="mace">Mace / Flail / Suns Grace</option>
-                                    <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
-                                    <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
+                                    <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
+                                    <option value="dancers_sword">Dancers Sword / Sparkler</option>
+                                    <option value="freezing_foil">Freezing Foil</option>
                                     <option value="rapier">Rapier / Bee Stinger</option>
                                     <option value="sickles">Sickles / The Last Laugh / Nightmare Bites</option>
-                                    <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
-                                    <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe / Skull
-                                        Scythe</option>
-                                    <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill Spear
-                                    </option>
-                                    <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff</option>
-                                    <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword</option>
                                     <option value="tempest_knife">Tempest Knife / Resolute Tempest Knife / Chill Gale
                                         Knife</option>
+                                    <option value="cutlass">Cutlass / Nameless Blade</option>
+                                    <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword</option>
+                                    <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe / Skull
+                                        Scythe</option>
+                                    <option value="backstabber">Backstabber / Swift Striker</option>
                                     <option value="void_touched">Void Touched Blades / Beginning and End</option>
+                                    <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill Spear
+                                    </option>
+                                    <option value="axe">Axe / Firebrand / Highland Axe</option>
+                                    <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
+                                    <option value="cursed_axe">Cursed Axe / Whirlwind</option>
                                     <option value="whip">Whip / Vine Whip</option>
+                                    <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom</option>
+                                    <option value="katana">Katana / Dark Katana / Masters Katana</option>
+                                    <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
+                                    <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
+                                    <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost Slayer /
+                                        Heartstealer</option>
+                                    <option value="mace">Mace / Flail / Suns Grace</option>
+                                    <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff</option>
+                                    <option value="bone_club">Bone Club / Bone Cudgel</option>
+                                    <option value="anchor">Anchor / Encrusted Anchor</option>
+                                    <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
                                 </select>
                             </div>
                         </div>
 
-                        <h3 class="subtitle is-6">Gameplay Stats</h3>
+                        <h3 class="subtitle is-6">Gameplay Stats (Optional)</h3>
 
                         <div class="field">
                             <label class="label">Trial + Threat Banner Multiplier</label>
-                            <input id="trialMultiplierInput" class="input" type="number" step="0.001" value="1"
-                                required>
+                            <input id="trialMultiplierInput" class="input" type="number" step="0.001"
+                                placeholder="e.g. 3.814 (see help guide)">
                         </div>
 
                         <div class="field">
                             <label class="label">Mob Health %</label>
-                            <input id="mobHealthInput" class="input" type="number" value="0" required>
+                            <input id="mobHealthInput" class="input" type="number" placeholder="e.g. 120">
                         </div>
 
                         <div class="field">
                             <label class="label">Mob Damage %</label>
-                            <input id="mobDamageInput" class="input" type="number" value="0" required>
+                            <input id="mobDamageInput" class="input" type="number" placeholder="e.g. 90">
                         </div>
 
                         <div class="field">
@@ -200,7 +197,6 @@
             </div>
 
         </div>
-
         <footer class="footer has-text-centered mt-5">
             <div class="content has-text-white">
                 <p>
@@ -209,7 +205,6 @@
                 <h5 class="is-size-7">Site by Mist.</h5>
                 </p>
             </div>
-
     </section>
 
     <script type="module" src="script.js"></script>
