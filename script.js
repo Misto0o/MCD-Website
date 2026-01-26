@@ -76,7 +76,11 @@ function calculateEffectiveMob(input) {
         playerDamageBannerEffect = 1 / (1 + (playerDamageDecrease / 100));
     }
 
-    const playerHealthMultiplier = playerHealthIncrease ? (1 + playerHealthIncrease / 100) : 1;
+    const playerHealthMultiplier = playerHealthIncrease
+        ? (playerHealthIncrease > 0
+            ? (1 + playerHealthIncrease / 100)  // Positive = increased health
+            : (1 + playerHealthIncrease / 100)) // Negative = decreased health
+        : 1;
 
     const meleeBaseDamage = WEAPON_BASE_DAMAGES[meleeType] || 251;
 
@@ -106,8 +110,8 @@ form.addEventListener("submit", async e => {
     const meleeType = document.getElementById("meleeTypeSelect").value;
     const meleeDamage = document.getElementById("meleeDamageInput").value.trim();
     const trialMultiplier = document.getElementById("trialMultiplierInput").value.trim();
-    const playerDamageDecrease = parseInt(document.getElementById("playerDamageDecreaseSelect").value);
-    const playerHealthIncrease = document.getElementById("playerHealthIncreaseInput").value.trim();
+    const playerDamageMod = document.getElementById("playerDamageModInput").value.trim();
+    const playerHealthMod = document.getElementById("playerHealthModInput").value.trim();
     const mobHealthPercent = document.getElementById("mobHealthInput").value.trim();
     const mobDamagePercent = document.getElementById("mobDamageInput").value.trim();
 
@@ -129,8 +133,8 @@ form.addEventListener("submit", async e => {
         meleeType ||
         meleeDamage ||
         trialMultiplier ||
-        playerDamageDecrease !== 0 ||
-        playerHealthIncrease ||
+        playerDamageMod ||
+        playerHealthMod ||
         mobHealthPercent !== '' ||
         mobDamagePercent !== '';
 

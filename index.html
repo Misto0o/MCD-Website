@@ -5,11 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minecraft Dungeons Submissions</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
-
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="mcdLogo\favicon.ico" />
+    <link rel="icon" type="image/png" href="mcdLogo/favicon.ico" />
     <meta name="title" content="Minecraft Dungeons Submissions — Show Off Your Gameplay!" />
     <meta name="description"
         content="Submit and explore Minecraft Dungeons gameplay videos! Share your dungeon runs, gear, and strategies with the community." />
@@ -22,32 +20,35 @@
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title has-text-centered has-text-white">
-                Minecraft Dungeons — Difficult Levels Submission Form
+            <h1 class="title has-text-centered has-text-white is-1">
+                ⚔️ Minecraft Dungeons ⚔️
             </h1>
+            <p class="subtitle has-text-centered has-text-white-ter is-5 mb-6">
+                Difficult Levels Leaderboard
+            </p>
 
-            <div class="card my-5">
-                <header class="card-header">
-                    <p class="card-header-title">Submission Rules</p>
-                    <a href="#" class="card-header-icon" aria-label="more"
-                        onclick="this.closest('.card').classList.toggle('is-active');">
-                        <span class="icon">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </a>
+            <!-- RULES CARD -->
+            <div class="card mb-5">
+                <header class="card-header" style="cursor: pointer;"
+                    onclick="this.parentElement.classList.toggle('is-active');">
+                    <p class="card-header-title">
+                        📜 Submission Rules
+                    </p>
+                    <button class="card-header-icon" aria-label="toggle">
+                        <span class="icon">▼</span>
+                    </button>
                 </header>
-                <div class="card-content" style="display:block;">
+                <div class="card-content">
                     <div class="content">
                         <ul>
                             <li>Only use legit items, or items you can get normally in the game (including
                                 glitches/exploits).</li>
                             <li>Accounts for the power level of gear used.</li>
-                            <li>Players must show the gear used and level played (can be at the very start of the video
-                                before playing level of choice).</li>
-                            <li>Modded items are allowed if they don't give any combat advantage
-                                (arrow farming/cosmetic/gilded/visual, etc). Items that increase damage, defense,
-                                survivability, or otherwise make the run easier are not allowed.</li>
-                            <li>No Hitless Gameplay.</li>
+                            <li>Players must show the gear used and level played (can be at the very start of the
+                                video).</li>
+                            <li>Modded items are allowed if they don't give any combat advantage (arrow
+                                farming/cosmetic/gilded/visual, etc).</li>
+                            <li>No Hitless Gameplay allowed.</li>
                             <li>You may switch items around as long as rules are followed.</li>
                             <li>Levels not allowed: The Stronghold, Squid Coast, ???.</li>
                         </ul>
@@ -55,180 +56,252 @@
                 </div>
             </div>
 
-            <div class="card my-5">
+            <!-- HELP CARD -->
+            <div class="card mb-5">
                 <div class="card-content has-text-centered">
-                    <h2 class="subtitle">Need Help?</h2>
-                    <p class="mb-3">Not sure what multiplier to use? Check out the reference guide!</p>
-                    <a href="help.html" target="_blank" class="button is-link is-medium help-button">
-                        📊 View Trial + Threat Banner Chart & Calculator Guide
+                    <p class="mb-3">💡 <strong>Need help with multipliers?</strong></p>
+                    <a href="help.html" target="_blank" class="button is-link is-medium">
+                        📊 View Calculator Guide
                     </a>
                 </div>
             </div>
 
-            <div class="card my-5">
+            <!-- SUBMISSION FORM -->
+            <div class="card mb-6">
                 <div class="card-content">
-                    <h2 class="subtitle">Submit your video</h2>
+                    <h2 class="title is-4 has-text-centered mb-5">🎮 Submit Your Run</h2>
                     <form id="uploadForm">
 
-                        <div class="field">
-                            <label class="label">Name</label>
-                            <input id="nameInput" class="input" type="text" required>
-                        </div>
+                        <!-- BASIC INFO -->
+                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
+                            <h3 class="subtitle is-5 mb-4">📝 Basic Information</h3>
 
-                        <div class="field">
-                            <label class="label">Video URL</label>
-                            <input id="urlInput" class="input" type="url" required>
-                        </div>
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Player Name</label>
+                                        <div class="control">
+                                            <input id="nameInput" class="input" type="text"
+                                                placeholder="Your in-game name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Platform</label>
+                                        <div class="control">
+                                            <div class="select is-fullwidth">
+                                                <select id="platformSelect" required>
+                                                    <option value="" disabled selected>Choose platform</option>
+                                                    <option value="PC">💻 PC</option>
+                                                    <option value="Xbox">🎮 Xbox</option>
+                                                    <option value="PlayStation">🎮 PlayStation</option>
+                                                    <option value="Nintendo Switch">🎮 Nintendo Switch</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <h3 class="subtitle is-6">Gear Stats (Optional)</h3>
-
-                        <div class="field">
-                            <label class="label">Armor +Health</label>
-                            <input id="armorHealthInput" class="input" type="number"
-                                placeholder="Enter the +Health from your armor (no commas)">
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Melee Weapon Damage</label>
-                            <input id="meleeDamageInput" class="input"
-                                placeholder="Enter the LOWER number of your damage range (no commas)" type="number">
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Melee Weapon Type</label>
-                            <div class="select is-fullwidth">
-                                <select id="meleeTypeSelect">
-                                    <option value="" disabled selected>Select melee weapon</option>
-                                    <option value="anchor">Anchor / Encrusted Anchor</option>
-                                    <option value="axe">Axe / Firebrand / Highland Axe</option>
-                                    <option value="backstabber">Backstabber / Swift Striker</option>
-                                    <option value="bone_club">Bone Club / Bone Cudgel</option>
-                                    <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
-                                    <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost Slayer /
-                                        Heartstealer</option>
-                                    <option value="coral_blade">Coral Blade / Sponge Striker</option>
-                                    <option value="cutlass">Cutlass / Nameless Blade</option>
-                                    <option value="cursed_axe">Cursed Axe / Whirlwind</option>
-                                    <option value="daggers">Daggers / Fangs of Frost / Shear Daggers / Moon Daggers
-                                    </option>
-                                    <option value="dancers_sword">Dancers Sword / Sparkler</option>
-                                    <option value="fighters_bindings">Fighters Bindings</option>
-                                    <option value="freezing_foil">Freezing Foil</option>
-                                    <option value="gauntlets">Gauntlets / Maulers / Soul Fist</option>
-                                    <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom</option>
-                                    <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
-                                    <option value="katana">Katana / Dark Katana / Masters Katana</option>
-                                    <option value="mace">Mace / Flail / Suns Grace</option>
-                                    <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
-                                    <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
-                                    <option value="rapier">Rapier / Bee Stinger</option>
-                                    <option value="sickles">Sickles / The Last Laugh / Nightmare Bites</option>
-                                    <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
-                                    <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe / Skull
-                                        Scythe</option>
-                                    <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill Spear
-                                    </option>
-                                    <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff</option>
-                                    <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword</option>
-                                    <option value="tempest_knife">Tempest Knife / Resolute Tempest Knife / Chill Gale
-                                        Knife</option>
-                                    <option value="void_touched">Void Touched Blades / Beginning and End</option>
-                                    <option value="whip">Whip / Vine Whip</option>
-                                </select>
+                            <div class="field">
+                                <label class="label">Video URL</label>
+                                <div class="control">
+                                    <input id="urlInput" class="input" type="url"
+                                        placeholder="https://youtube.com/watch?v=..." required>
+                                </div>
+                                <p class="help">YouTube, Twitch, or direct video link</p>
                             </div>
                         </div>
 
-                        <h3 class="subtitle is-6">Gameplay Stats (Optional)</h3>
+                        <!-- GEAR STATS -->
+                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
+                            <h3 class="subtitle is-5 mb-4">⚔️ Gear Stats <span class="tag is-info">Optional</span></h3>
+                            <p class="help mb-4">Fill out all fields below for automatic calculation, or leave blank for
+                                manual review</p>
 
-                        <div class="field">
-                            <label class="label">Trial + Threat Banner Multiplier</label>
-                            <input id="trialMultiplierInput" class="input" type="number" step="0.001"
-                                placeholder="e.g. 3.814 (see help guide)">
-                            <p class="help">Use the reference chart to find your Trial + Threat combination</p>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Player Damage Decreased %</label>
-                            <div class="select is-fullwidth">
-                                <select id="playerDamageDecreaseSelect">
-                                    <option value="0" selected>None (0%)</option>
-                                    <option value="-20">-20% Player Damage</option>
-                                    <option value="-40">-40% Player Damage</option>
-                                    <option value="-60">-60% Player Damage</option>
-                                    <option value="-75">-75% Player Damage</option>
-                                    <option value="-80">-80% Player Damage</option>
-                                    <option value="-90">-90% Player Damage</option>
-                                    <option value="-100">-100% Player Damage</option>
-                                </select>
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Armor +Health</label>
+                                        <div class="control">
+                                            <input id="armorHealthInput" class="input" type="number"
+                                                placeholder="3000850">
+                                        </div>
+                                        <p class="help">The +Health value on your armor (no commas)</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Weapon Damage</label>
+                                        <div class="control">
+                                            <input id="meleeDamageInput" class="input" type="number"
+                                                placeholder="1200360">
+                                        </div>
+                                        <p class="help">Lower number of damage range (no commas)</p>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="help">Decreased player damage = increased effective mob health</p>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Player Health Increased %</label>
-                            <input id="playerHealthIncreaseInput" class="input" type="number" placeholder="e.g. 30">
-                            <p class="help">Increased player health = decreased effective mob damage</p>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Mob Health Increase %</label>
-                            <input id="mobHealthInput" class="input" type="number" placeholder="e.g. 120">
-                            <p class="help">Enter the mob health percentage modifier (e.g., 30 for +30% If None Put 0)</p>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Mob Damage Increase %</label>
-                            <input id="mobDamageInput" class="input" type="number" placeholder="e.g. 90">
-                            <p class="help">Enter the mob damage percentage modifier (e.g., 90 for +90% If None Put 0)</p>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Platform</label>
-                            <div class="select is-fullwidth">
-                                <select id="platformSelect" required>
-                                    <option value="" disabled selected>Select platform</option>
-                                    <option value="PC">PC</option>
-                                    <option value="Xbox">Xbox</option>
-                                    <option value="PlayStation">PlayStation</option>
-                                    <option value="Nintendo Switch">Nintendo Switch</option>
-                                </select>
+                            <div class="field">
+                                <label class="label">Weapon Type</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="meleeTypeSelect">
+                                            <option value="" disabled selected>Select your weapon</option>
+                                            <option value="anchor">Anchor / Encrusted Anchor</option>
+                                            <option value="axe">Axe / Firebrand / Highland Axe</option>
+                                            <option value="backstabber">Backstabber / Swift Striker</option>
+                                            <option value="bone_club">Bone Club / Bone Cudgel</option>
+                                            <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
+                                            <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost
+                                                Slayer / Heartstealer</option>
+                                            <option value="coral_blade">Coral Blade / Sponge Striker</option>
+                                            <option value="cutlass">Cutlass / Nameless Blade</option>
+                                            <option value="cursed_axe">Cursed Axe / Whirlwind</option>
+                                            <option value="daggers">Daggers / Fangs of Frost / Shear Daggers / Moon
+                                                Daggers</option>
+                                            <option value="dancers_sword">Dancers Sword / Sparkler</option>
+                                            <option value="fighters_bindings">Fighters Bindings</option>
+                                            <option value="freezing_foil">Freezing Foil</option>
+                                            <option value="gauntlets">Gauntlets / Maulers / Soul Fist</option>
+                                            <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom
+                                            </option>
+                                            <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
+                                            <option value="katana">Katana / Dark Katana / Masters Katana</option>
+                                            <option value="mace">Mace / Flail / Suns Grace</option>
+                                            <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
+                                            <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
+                                            <option value="rapier">Rapier / Bee Stinger</option>
+                                            <option value="sickles">Sickles / The Last Laugh / Nightmare Bites</option>
+                                            <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
+                                            <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe /
+                                                Skull Scythe</option>
+                                            <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill
+                                                Spear</option>
+                                            <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff
+                                            </option>
+                                            <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword
+                                            </option>
+                                            <option value="tempest_knife">Tempest Knife / Resolute Tempest Knife / Chill
+                                                Gale Knife</option>
+                                            <option value="void_touched">Void Touched Blades / Beginning and End
+                                            </option>
+                                            <option value="whip">Whip / Vine Whip</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <button class="button is-primary" type="submit">Submit</button>
+                        <!-- MODIFIERS -->
+                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
+                            <h3 class="subtitle is-5 mb-4">🎯 Modifiers <span class="tag is-info">Optional</span></h3>
+
+                            <div class="field">
+                                <label class="label">Trial + Threat Banner Multiplier</label>
+                                <div class="control">
+                                    <input id="trialMultiplierInput" class="input" type="number" step="0.001"
+                                        placeholder="3.814">
+                                </div>
+                                <p class="help">Check the reference guide for your combination</p>
+                            </div>
+
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Player Damage Modified %</label>
+                                        <div class="control">
+                                            <input id="playerDamageModInput" class="input" type="number"
+                                                placeholder="20 or -60">
+                                        </div>
+                                        <p class="help">Positive = increased, Negative = decreased</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Player Health Modified %</label>
+                                        <div class="control">
+                                            <input id="playerHealthModInput" class="input" type="number"
+                                                placeholder="30 or -40">
+                                        </div>
+                                        <p class="help">Positive = increased, Negative = decreased</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="columns">
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Mob Health Increase %</label>
+                                        <div class="control">
+                                            <input id="mobHealthInput" class="input" type="number" placeholder="120">
+                                        </div>
+                                        <p class="help">Enter 0 if none</p>
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <div class="field">
+                                        <label class="label">Mob Damage Increase %</label>
+                                        <div class="control">
+                                            <input id="mobDamageInput" class="input" type="number" placeholder="90">
+                                        </div>
+                                        <p class="help">Enter 0 if none</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control has-text-centered">
+                                <button class="button is-primary is-large" type="submit">
+                                    🚀 Submit Run
+                                </button>
+                            </div>
+                        </div>
 
                     </form>
                 </div>
             </div>
 
-            <h2 class="title is-4">Submissions</h2>
-
-            <div class="table-container">
-                <table class="table is-striped is-fullwidth">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Video</th>
-                            <th>Mob Damage</th>
-                            <th>Mob Health</th>
-                            <th>Platform</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
+            <!-- SUBMISSIONS TABLE -->
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="title is-4 has-text-centered mb-5">🏆 Leaderboard</h2>
+                    <div class="table-container">
+                        <table class="table is-fullwidth is-hoverable">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Video</th>
+                                    <th>Mob Damage</th>
+                                    <th>Mob Health</th>
+                                    <th>Platform</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </div>
-        <footer class="footer has-text-centered mt-5">
-            <div class="content has-text-white">
-                <p>
-                    &copy; 2024 Minecraft Dungeons Submissions. All rights reserved.
-                <h5 class="is-size-7">This site is a work in progress more updates will occur!</h5>
-                <h5 class="is-size-7">Site by Mist.</h5>
-                </p>
-            </div>
     </section>
+
+    <footer class="footer mt-6">
+        <div class="content has-text-centered has-text-white">
+            <p class="mb-2">
+                <strong class="has-text-white">Minecraft Dungeons Submissions</strong>
+            </p>
+            <p class="is-size-7 mb-1">
+                &copy; 2024 All rights reserved
+            </p>
+            <p class="is-size-7">
+                Site by <strong class="has-text-white">Mist</strong> | Work in progress 🚧
+            </p>
+        </div>
+    </footer>
 
     <script type="module" src="script.js"></script>
     <script>
@@ -236,33 +309,21 @@
             navigator.serviceWorker.getRegistrations().then(registrations => {
                 registrations.forEach(reg => reg.unregister());
             });
-
             navigator.serviceWorker.register('/service-worker.js')
-                .then((registration) => {
-                    console.log('✅ Cache Nuker Service Worker registered!');
-                })
-                .catch((error) => {
-                    console.error('❌ Service Worker registration failed:', error);
-                });
-
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch(err => console.error('❌ SW registration failed:', err));
             navigator.serviceWorker.addEventListener('message', (event) => {
-                if (event.data && event.data.type === 'CACHE_CLEARED') {
-                    console.log('💥 Caches have been cleared!');
-                    alert('Caches cleared! Page will reload.');
+                if (event.data?.type === 'CACHE_CLEARED') {
+                    alert('Caches cleared! Reloading...');
                     window.location.reload();
                 }
             });
-
             navigator.serviceWorker.ready.then(() => {
-                window.nukeCaches = function () {
+                window.nukeCaches = () => {
                     if (navigator.serviceWorker.controller) {
-                        console.log('💣 Sending nuke command...');
                         navigator.serviceWorker.controller.postMessage({ type: 'NUKE_CACHE' });
-                    } else {
-                        console.error('❌ No service worker controller available');
                     }
                 };
-                console.log('✅ nukeCaches() is now available!');
             });
         }
     </script>
