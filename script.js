@@ -125,6 +125,8 @@ form.addEventListener("submit", async e => {
         meleeType &&
         meleeDamage &&
         trialMultiplier &&
+        playerDamageMod &&
+        playerHealthMod &&
         mobHealthPercent !== '' &&
         mobDamagePercent !== '';
 
@@ -152,8 +154,8 @@ form.addEventListener("submit", async e => {
             trialMultiplier: parseFloat(trialMultiplier),
             mobHealthPercent: parseFloat(mobHealthPercent || 0),
             mobDamagePercent: parseFloat(mobDamagePercent || 0),
-            playerDamageDecrease: playerDamageDecrease || 0,
-            playerHealthIncrease: parseFloat(playerHealthIncrease || 0),
+            playerDamageDecrease: parseFloat(playerDamageMod || 0),
+            playerHealthIncrease: parseFloat(playerHealthMod || 0),
             armorHealth: parseFloat(armorHealth),
             meleeType,
             meleeDamage: parseFloat(meleeDamage)
@@ -171,8 +173,13 @@ form.addEventListener("submit", async e => {
         meleeType: meleeType || null,
         meleeDamage: meleeDamage ? parseFloat(meleeDamage) : null,
         trialMultiplier: trialMultiplier ? parseFloat(trialMultiplier) : null,
-        playerDamageDecrease: playerDamageDecrease || null,
-        playerHealthIncrease: playerHealthIncrease ? parseFloat(playerHealthIncrease) : null,
+        playerDamageDecrease: playerDamageMod
+            ? parseFloat(playerDamageMod)
+            : null,
+
+        playerHealthIncrease: playerHealthMod
+            ? parseFloat(playerHealthMod)
+            : null,
         mobHealthPercent: mobHealthPercent !== '' ? parseFloat(mobHealthPercent) : null,
         mobDamagePercent: mobDamagePercent !== '' ? parseFloat(mobDamagePercent) : null,
         mobDamage,

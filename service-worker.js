@@ -37,14 +37,8 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-// Don't cache anything - pass all requests through to the network
 self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        fetch(event.request).catch((error) => {
-            console.error('Service Worker: Fetch failed:', error);
-            throw error;
-        })
-    );
+    event.respondWith(fetch(event.request));
 });
 
 // Optional: Listen for messages to manually trigger cache clearing
