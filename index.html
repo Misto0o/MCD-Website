@@ -18,81 +18,89 @@
 </head>
 
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title has-text-centered has-text-white is-1">
+    <header class="mcd-hero-bg">
+        <div class="hero-body has-text-centered py-5">
+            <h1 class="title has-text-white is-2 mb-2 tracking-wide">
                 ⚔️ Minecraft Dungeons ⚔️
             </h1>
-            <p class="subtitle has-text-centered has-text-white-ter is-5 mb-6">
+            <p class="subtitle has-text-white is-6 m-0 opacity-90">
                 Difficult Levels Leaderboard
             </p>
+        </div>
+    </header>
 
-            <!-- RULES CARD -->
-            <div class="card mb-5">
+    <section class="section pt-4">
+        <div class="container is-max-w-900">
+
+            <div class="card mb-4 compact-card">
                 <header class="card-header" style="cursor: pointer;"
                     onclick="this.parentElement.classList.toggle('is-active');">
-                    <p class="card-header-title">
-                        📜 Submission Rules
+                    <p class="card-header-title has-text-white">
+                        📜Rules
                     </p>
                     <button class="card-header-icon" aria-label="toggle">
-                        <span class="icon">▼</span>
+                        <span class="icon has-text-white">▼</span>
                     </button>
                 </header>
-                <div class="card-content">
-                    <div class="content">
-                        <ul>
-                            <li>Only use legit items, or items you can get normally in the game (including
-                                glitches/exploits).</li>
+                <div class="card-content transition-content py-0">
+                    <div class="content has-text-white py-3">
+                        <ul class="m-0 pl-4 rules-list">
+                            <li>Only items that can be obtained through normal gameplay and are theoretically possible
+                                in-game may be used. Extremely rare combinations are allowed, but impossible items (such
+                                as a Mystery Armor with 3 perk combinations and that cannot naturally generate) are not.</li>
                             <li>Accounts for the power level of gear used.</li>
-                            <li>Players must show the gear used and level played (can be at the very start of the
+                            <li>Players must show the gear used and level played for atleast 1-3 seconds and must be CLEAR on
+                                the damage and health output of the gear and be shown (can be at the very start of the
                                 video).</li>
-                            <li>Modded items are allowed if they don't give any combat advantage (arrow
-                                farming/cosmetic/gilded/visual, etc).</li>
+                            <li>Modded items are allowed if they don't give any insane combat advantage(Like doing the intger limit in one hit without any buildup) (arrow
+                                farming/cosmetic/gilded/visual, etc are allowed).</li>
                             <li>No Hitless Gameplay allowed.</li>
-                            <li>You may switch items around as long as rules are followed.</li>
+                            <li>You may switch items around as long as rules are followed. IF you do, make sure to
+                                clearly show the changes in your video.</li>
                             <li>Levels not allowed: The Stronghold, Squid Coast, ???.</li>
+                            <li>Any modifiers are allowed, but must be shown and clearly stated in the video.</li>
+                            <li>No TAS (Tool-Assisted Speedrun) allowed.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- HELP CARD -->
-            <div class="card mb-5">
-                <div class="card-content has-text-centered">
-                    <p class="mb-3">💡 <strong>Need help with multipliers?</strong></p>
-                    <a href="help.html" target="_blank" class="button is-link is-medium">
-                        📊 View Calculator Guide
+            <div class="card mb-4 compact-card">
+                <div class="card-content py-3 has-text-centered">
+                    <p class="mb-2 has-text-white is-size-7">💡 <strong>Need Help?</strong></p>
+                    <a href="help.html" target="_blank" class="button is-link is-small custom-btn">
+                        📊 View Guide
                     </a>
                 </div>
             </div>
 
-            <!-- SUBMISSION FORM -->
-            <div class="card mb-6">
-                <div class="card-content">
-                    <h2 class="title is-4 has-text-centered mb-5">🎮 Submit Your Run</h2>
+            <div class="card mb-5 compact-card">
+                <div class="card-content py-4">
+                    <h2 class="title is-5 has-text-white has-text-centered mb-4">🎮 Submit Your Run</h2>
                     <form id="uploadForm">
 
-                        <!-- BASIC INFO -->
-                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
-                            <h3 class="subtitle is-5 mb-4">📝 Basic Information</h3>
+                        <div class="box mb-4 compact-box">
+                            <h3 class="subtitle is-6 mb-3 has-text-white font-mono border-bottom-dark pb-1">📝 Basic
+                                Information</h3>
 
-                            <div class="columns">
-                                <div class="column">
+                            <div class="columns is-mobile is-multiline mb-0">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Player Name</label>
                                         <div class="control">
-                                            <input id="nameInput" class="input" type="text"
+                                            <input id="nameInput" class="input custom-input" type="text"
                                                 placeholder="Your in-game name" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="column">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Platform</label>
                                         <div class="control">
-                                            <div class="select is-fullwidth">
-                                                <select id="platformSelect" required>
-                                                    <option value="" disabled selected>Choose platform</option>
+                                            <div class="select is-fullwidth custom-select-wrapper">
+                                                <select id="platformSelect" class="custom-input" required>
+                                                    <option value="" disabled selected class="has-text-grey">Choose
+                                                        platform</option>
                                                     <option value="PC">💻 PC</option>
                                                     <option value="Xbox">🎮 Xbox</option>
                                                     <option value="PlayStation">🎮 PlayStation</option>
@@ -104,51 +112,67 @@
                                 </div>
                             </div>
 
-                            <div class="field">
+                            <div class="field py-1">
                                 <label class="label">Video URL</label>
                                 <div class="control">
-                                    <input id="urlInput" class="input" type="url"
-                                        placeholder="https://youtube.com/watch?v=..." required>
+                                    <input id="urlInput" class="input custom-input" type="url"
+                                        placeholder="https://youtube.com/watch?v=...">
                                 </div>
-                                <p class="help">YouTube, Twitch, or direct video link</p>
+                                <p class="help-text">YouTube, Twitch, or direct streaming video link</p>
+                            </div>
+
+                            <div class="field py-1 mt-2">
+                                <label class="label">Or Upload Run File (.mp4)</label>
+                                <div class="file is-small is-fullwidth has-name custom-file-input">
+                                    <label class="file-label">
+                                        <input class="file-input" type="file" id="fileRunInput" accept="video/mp4">
+                                        <span class="file-cta">
+                                            <span class="file-icon">📁</span>
+                                            <span class="file-label">Choose file…</span>
+                                        </span>
+                                        <span class="file-name" id="fileRunName">No file uploaded</span>
+                                    </label>
+                                </div>
+                                <p class="help-text">Upload raw .mp4 gameplay recordings directly</p>
                             </div>
                         </div>
 
-                        <!-- GEAR STATS -->
-                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
-                            <h3 class="subtitle is-5 mb-4">⚔️ Gear Stats <span class="tag is-info">Optional</span></h3>
-                            <p class="help mb-4">Fill out all fields below for automatic calculation, or leave blank for
+                        <div class="box mb-4 compact-box">
+                            <h3 class="subtitle is-6 mb-3 has-text-white font-mono border-bottom-dark pb-1">⚔️ Gear
+                                Stats <span class="tag is-dark-info ml-2">Optional</span></h3>
+                            <p class="help-text mb-3">Complete all fields below for autocalculation, or leave blank for
                                 manual review</p>
 
-                            <div class="columns">
-                                <div class="column">
+                            <div class="columns is-mobile is-multiline mb-0">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Armor +Health</label>
                                         <div class="control">
-                                            <input id="armorHealthInput" class="input" type="number"
+                                            <input id="armorHealthInput" class="input custom-input" type="number"
                                                 placeholder="3000850">
                                         </div>
-                                        <p class="help">The +Health value on your armor (no commas)</p>
+                                        <p class="help-text">The +Health value on armor (no commas)</p>
                                     </div>
                                 </div>
-                                <div class="column">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Weapon Damage</label>
                                         <div class="control">
-                                            <input id="meleeDamageInput" class="input" type="number"
+                                            <input id="meleeDamageInput" class="input custom-input" type="number"
                                                 placeholder="1200360">
                                         </div>
-                                        <p class="help">Lower number of damage range (no commas)</p>
+                                        <p class="help-text">Lower value of damage range (no commas)</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="field">
+                            <div class="field py-1">
                                 <label class="label">Weapon Type</label>
                                 <div class="control">
-                                    <div class="select is-fullwidth">
-                                        <select id="meleeTypeSelect">
-                                            <option value="" disabled selected>Select your weapon</option>
+                                    <div class="select is-fullwidth custom-select-wrapper">
+                                        <select id="meleeTypeSelect" class="custom-input">
+                                            <option value="" disabled selected class="has-text-grey">Select your weapon
+                                            </option>
                                             <option value="anchor">Anchor / Encrusted Anchor</option>
                                             <option value="axe">Axe / Firebrand / Highland Axe</option>
                                             <option value="backstabber">Backstabber / Swift Striker</option>
@@ -194,67 +218,70 @@
                             </div>
                         </div>
 
-                        <!-- MODIFIERS -->
-                        <div class="box mb-5" style="background: rgba(88, 28, 135, 0.15);">
-                            <h3 class="subtitle is-5 mb-4">🎯 Modifiers <span class="tag is-info">Optional</span></h3>
+                        <div class="box mb-4 compact-box">
+                            <h3 class="subtitle is-6 mb-3 has-text-white font-mono border-bottom-dark pb-1">🎯 Modifiers
+                                <span class="tag is-dark-info ml-2">Optional</span>
+                            </h3>
 
-                            <div class="field">
+                            <div class="field py-1">
                                 <label class="label">Trial + Threat Banner Multiplier</label>
                                 <div class="control">
-                                    <input id="trialMultiplierInput" class="input" type="number" step="0.001"
-                                        placeholder="3.814">
+                                    <input id="trialMultiplierInput" class="input custom-input" type="number"
+                                        step="0.001" placeholder="3.814">
                                 </div>
-                                <p class="help">Check the reference guide for your combination</p>
+                                <p class="help-text">Check reference guide for configuration multiplier</p>
                             </div>
 
-                            <div class="columns">
-                                <div class="column">
+                            <div class="columns is-mobile is-multiline mb-0">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Player Damage Modified %</label>
                                         <div class="control">
-                                            <input id="playerDamageModInput" class="input" type="number"
+                                            <input id="playerDamageModInput" class="input custom-input" type="number"
                                                 placeholder="20 or -60">
                                         </div>
-                                        <p class="help">Positive = increased, Negative = decreased</p>
+                                        <p class="help-text">Positive = increased, Negative = decreased</p>
                                     </div>
                                 </div>
-                                <div class="column">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Player Health Modified %</label>
                                         <div class="control">
-                                            <input id="playerHealthModInput" class="input" type="number"
+                                            <input id="playerHealthModInput" class="input custom-input" type="number"
                                                 placeholder="30 or -40">
                                         </div>
-                                        <p class="help">Positive = increased, Negative = decreased</p>
+                                        <p class="help-text">Positive = increased, Negative = decreased</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="columns">
-                                <div class="column">
+                            <div class="columns is-mobile is-multiline mb-0">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Mob Health Increase %</label>
                                         <div class="control">
-                                            <input id="mobHealthInput" class="input" type="number" placeholder="120">
+                                            <input id="mobHealthInput" class="input custom-input" type="number"
+                                                placeholder="120">
                                         </div>
-                                        <p class="help">Enter 0 if none</p>
+                                        <p class="help-text">Enter 0 if none</p>
                                     </div>
                                 </div>
-                                <div class="column">
+                                <div class="column is-6-desktop is-12-mobile py-1">
                                     <div class="field">
                                         <label class="label">Mob Damage Increase %</label>
                                         <div class="control">
-                                            <input id="mobDamageInput" class="input" type="number" placeholder="90">
+                                            <input id="mobDamageInput" class="input custom-input" type="number"
+                                                placeholder="90">
                                         </div>
-                                        <p class="help">Enter 0 if none</p>
+                                        <p class="help-text">Enter 0 if none</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="field">
+                        <div class="field pt-2">
                             <div class="control has-text-centered">
-                                <button class="button is-primary is-large" type="submit">
+                                <button class="button is-link is-small custom-btn px-5" type="submit">
                                     🚀 Submit Run
                                 </button>
                             </div>
@@ -264,20 +291,18 @@
                 </div>
             </div>
 
-            <!-- SUBMISSIONS TABLE -->
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title is-4 has-text-centered mb-5">🏆 Leaderboard</h2>
+            <div class="card compact-card">
+                <div class="card-content py-4">
+                    <h2 class="title is-5 has-text-white has-text-centered mb-4">🏆 Leaderboard</h2>
                     <div class="table-container">
-                        <table class="table is-fullwidth is-hoverable">
+                        <table class="table is-fullwidth custom-table">
                             <thead>
                                 <tr>
                                     <th>Player</th>
-                                    <th>Video</th>
+                                    <th>Video / Playback</th>
                                     <th>Mob Damage</th>
                                     <th>Mob Health</th>
                                     <th>Platform</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody"></tbody>
@@ -289,22 +314,32 @@
         </div>
     </section>
 
-    <footer class="footer mt-6">
+    <footer class="footer mt-6 py-5">
         <div class="content has-text-centered has-text-white">
-            <p class="mb-2">
-                <strong class="has-text-white">Minecraft Dungeons Submissions</strong>
+            <p class="mb-1 is-size-6">
+                <strong>Minecraft Dungeons Submissions</strong>
             </p>
-            <p class="is-size-7 mb-1">
+            <p class="is-size-7 mb-1 opacity-70">
                 &copy; 2024 All rights reserved
             </p>
-            <p class="is-size-7">
-                Site by <strong class="has-text-white">Mist</strong> | Work in progress 🚧
+            <p class="is-size-7 opacity-70">
+                Site by <strong>Mist</strong> | Work in progress 🚧
             </p>
         </div>
     </footer>
 
     <script type="module" src="script.js"></script>
     <script>
+        // Update input file name feedback
+        const fileInput = document.getElementById('fileRunInput');
+        if (fileInput) {
+            fileInput.onchange = () => {
+                if (fileInput.files.length > 0) {
+                    document.getElementById('fileRunName').textContent = fileInput.files[0].name;
+                }
+            };
+        }
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(registrations => {
                 registrations.forEach(reg => reg.unregister());

@@ -78,8 +78,8 @@ function calculateEffectiveMob(input) {
 
     const playerHealthMultiplier = playerHealthIncrease
         ? (playerHealthIncrease > 0
-            ? (1 + playerHealthIncrease / 100)  // Positive = increased health
-            : (1 + playerHealthIncrease / 100)) // Negative = decreased health
+            ? (1 + playerHealthIncrease / 100)
+            : (1 + playerHealthIncrease / 100))
         : 1;
 
     const meleeBaseDamage = WEAPON_BASE_DAMAGES[meleeType] || 251;
@@ -105,6 +105,21 @@ form.addEventListener("submit", async e => {
     const name = document.getElementById("nameInput").value.trim();
     const videoUrl = document.getElementById("urlInput").value.trim();
     const platform = document.getElementById("platformSelect").value;
+    const fileInput = document.getElementById("fileRunInput");
+
+    // Require either a URL string or a local file upload run
+    if (!name || (!videoUrl && (!fileInput || fileInput.files.length === 0)) || !platform) {
+        alert("Please fill out your Name, Platform, and provide either a Video URL or upload a Run File.");
+        return;
+    }
+
+    // Process file upload fallback conversion to temporary string if using purely local storage paths
+    let cleanVideoUrl = videoUrl;
+    if (fileInput && fileInput.files.length > 0) {
+        const uploadedFile = fileInput.files[0];
+        // Generate valid file reference path string format
+        cleanVideoUrl = `localfile://${uploadedFile.name}#${URL.createObjectURL(uploadedFile)}`;
+    }
 
     const armorHealth = document.getElementById("armorHealthInput").value.trim();
     const meleeType = document.getElementById("meleeTypeSelect").value;
@@ -114,11 +129,6 @@ form.addEventListener("submit", async e => {
     const playerHealthMod = document.getElementById("playerHealthModInput").value.trim();
     const mobHealthPercent = document.getElementById("mobHealthInput").value.trim();
     const mobDamagePercent = document.getElementById("mobDamageInput").value.trim();
-
-    if (!name || !videoUrl || !platform) {
-        alert("Please fill out Name, Video URL, and Platform.");
-        return;
-    }
 
     const allStatsFilled =
         armorHealth &&
@@ -167,19 +177,14 @@ form.addEventListener("submit", async e => {
 
     await addDoc(collection(db, "submissions"), {
         name,
-        videoUrl,
+        videoUrl: cleanVideoUrl,
         platform,
         armorHealth: armorHealth ? parseFloat(armorHealth) : null,
         meleeType: meleeType || null,
         meleeDamage: meleeDamage ? parseFloat(meleeDamage) : null,
         trialMultiplier: trialMultiplier ? parseFloat(trialMultiplier) : null,
-        playerDamageDecrease: playerDamageMod
-            ? parseFloat(playerDamageMod)
-            : null,
-
-        playerHealthIncrease: playerHealthMod
-            ? parseFloat(playerHealthMod)
-            : null,
+        playerDamageDecrease: playerDamageMod ? parseFloat(playerDamageMod) : null,
+        playerHealthIncrease: playerHealthMod ? parseFloat(playerHealthMod) : null,
         mobHealthPercent: mobHealthPercent !== '' ? parseFloat(mobHealthPercent) : null,
         mobDamagePercent: mobDamagePercent !== '' ? parseFloat(mobDamagePercent) : null,
         mobDamage,
@@ -191,21 +196,58 @@ form.addEventListener("submit", async e => {
 
     alert("✅ Submission successful!");
     form.reset();
+    const fileLabelName = document.getElementById('fileRunName');
+    if (fileLabelName) fileLabelName.textContent = "No file uploaded";
 });
 
-const q = query(collection(db, "submissions"), orderBy("createdAt", "desc"));
+// --- UPDATED LEADERBOARD LISTENER WITH PRIMARY CALCULATION SORTING ---
+// We query all submissions, then use client-side logic to filter, sequence, and position them.
+const q = query(collection(db, "submissions"));
 onSnapshot(q, snapshot => {
     tableBody.innerHTML = "";
+
+    // 1. Map documents into a standard array so we can sort them locally
+    const submissions = [];
     snapshot.forEach(docSnap => {
-        const d = docSnap.data();
+        submissions.push({
+            id: docSnap.id,
+            data: docSnap.data()
+        });
+    });
+
+    // 2. Sort Logic: Higher Mob Damage first. If equal, higher Mob Health wins. Pending items go to the bottom.
+    submissions.sort((a, b) => {
+        // Handle pending moderation status items (push them to the absolute bottom)
+        if (a.data.needsModeration && !b.data.needsModeration) return 1;
+        if (!a.data.needsModeration && b.data.needsModeration) return -1;
+        if (a.data.needsModeration && b.data.needsModeration) {
+            return b.data.createdAt - a.data.createdAt; // Newer pending runs show first among pending items
+        }
+
+        // Primary Sort: Effective Mob Damage (Descending order)
+        const damageA = a.data.mobDamage ?? 0;
+        const damageB = b.data.mobDamage ?? 0;
+        if (damageB !== damageA) {
+            return damageB - damageA;
+        }
+
+        // Secondary Sort (Tie-breaker): Effective Mob Health (Descending order)
+        const healthA = a.data.mobHealth ?? 0;
+        const healthB = b.data.mobHealth ?? 0;
+        return healthB - healthA;
+    });
+
+    // 3. Render the properly sorted leaderboard list
+    submissions.forEach(item => {
+        const d = item.data;
         const row = document.createElement("tr");
         const video = detectEmbed(d.videoUrl);
 
         let mobDamageDisplay, mobHealthDisplay;
 
         if (d.needsModeration) {
-            mobDamageDisplay = '<span class="tag is-warning">Pending Moderation</span>';
-            mobHealthDisplay = '<span class="tag is-warning">Pending Moderation</span>';
+            mobDamageDisplay = '<span class="tag is-warning custom-warning-tag">Pending</span>';
+            mobHealthDisplay = '<span class="tag is-warning custom-warning-tag">Pending</span>';
         } else {
             const mobDamage = d.mobDamage ?? 0;
             const mobHealth = d.mobHealth ?? 0;
@@ -214,18 +256,28 @@ onSnapshot(q, snapshot => {
         }
 
         row.innerHTML = `
-            <td>${d.name}</td>
+            <td class="has-text-white font-weight-bold">${d.name}</td>
             <td>${video}</td>
-            <td>${mobDamageDisplay}</td>
-            <td>${mobHealthDisplay}</td>
-            <td>${d.platform}</td>
-            <td>${d.userId === auth.currentUser?.uid ? `<button class="button is-danger is-small delete-btn" data-id="${docSnap.id}">Delete</button>` : ""}</td>
+            <td class="has-text-white font-mono">${mobDamageDisplay}</td>
+            <td class="has-text-white font-mono">${mobHealthDisplay}</td>
+            <td class="has-text-white">${d.platform}</td>
+            <td>${d.userId === auth.currentUser?.uid ? `<button class="button is-danger is-small custom-delete-btn" data-id="${item.id}">Delete</button>` : ""}</td>
         `;
         tableBody.appendChild(row);
     });
 });
 
 function detectEmbed(url) {
+    if (!url) return `<span class="has-text-grey">No video available</span>`;
+
+    // Handle local file uploads converted to object URLs dynamically
+    if (url.startsWith("localfile://")) {
+        const actualBlobUrl = url.split("#")[1];
+        if (actualBlobUrl) {
+            return `<video width="260" height="160" controls style="border: 1px solid #444; border-radius:4px;"><source src="${actualBlobUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
+        }
+    }
+
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
         let videoId = "";
 
@@ -238,14 +290,14 @@ function detectEmbed(url) {
         }
 
         if (videoId) {
-            return `<iframe width="300" height="200" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            return `<iframe width="260" height="160" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:1px solid #444; border-radius:4px;"></iframe>`;
         }
     }
 
-    return `<a href="${url}" target="_blank" class="button is-small is-link">Watch Video</a>`;
+    return `<a href="${url}" target="_blank" class="button is-small is-link custom-btn">Watch Video</a>`;
 }
 
 document.addEventListener("click", async e => {
-    if (!e.target.matches(".delete-btn")) return;
+    if (!e.target.matches(".custom-delete-btn")) return;
     await deleteDoc(doc(db, "submissions", e.target.dataset.id));
 });

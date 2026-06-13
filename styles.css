@@ -1,224 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --black: #000000;
+  --near-black: #0d0d11;
+  --panel-bg: #141419;
+  --white: #ffffff;
+  --gray-100: #f5f5f5;
+  --gray-200: #e0e0e0;
+  --gray-400: #aaaaaa;
+  --gray-800: #2a2a35;
+  --radius: 6px;
+  --border: 1px solid #3a3a4a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--black);
+}
+
 body {
-  background: url('MCD_Background.png') center center fixed;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--black);
+  color: var(--white) !important;
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── Original MCD Banner Header Style ── */
+.mcd-hero-bg {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(13, 13, 17, 0.95)),
+    url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1200&auto=format&fit=crop') no-repeat center center;
   background-size: cover;
-  color: #ffffff;
-  position: relative;
-  font-family: 'Minecraft', 'Mojangles', sans-serif;
+  border-bottom: var(--border);
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(17, 24, 39, 0.9) 100%);
-  z-index: -1;
+.tracking-wide {
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-.title {
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8),
-    0 0 20px rgba(255, 140, 0, 0.3);
-  font-weight: bold;
-  letter-spacing: 1px;
+.opacity-90 {
+  opacity: 0.9;
 }
 
-.card {
-  background: rgba(30, 20, 50, 0.85);
-  border: 2px solid rgba(139, 92, 246, 0.3);
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(139, 92, 246, 0.15);
-  backdrop-filter: blur(10px);
+/* ── Layout Tuning (More Compact) ── */
+.container.is-max-w-900 {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* ── Hard Bright White Cards & Boxes ── */
+.compact-card {
+  background-color: var(--panel-bg) !important;
+  border: var(--border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: none !important;
+  overflow: hidden;
 }
 
 .card-header {
-  background: rgba(88, 28, 135, 0.4);
-  border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+  background-color: var(--near-black) !important;
+  border-bottom: var(--border) !important;
+  box-shadow: none !important;
 }
 
 .card-header-title {
-  color: #e9d5ff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  color: var(--white) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+.rules-list li {
+  color: var(--white) !important;
+  margin-bottom: 4px;
+}
+
+.compact-box {
+  background-color: var(--near-black) !important;
+  border: var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 12px 16px !important;
+}
+
+.border-bottom-dark {
+  border-bottom: 1px solid var(--gray-800);
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Form Labels & Helpers ── */
+label.label {
+  color: var(--white) !important;
+  /* Bright white labels */
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px !important;
+}
+
+.help-text {
+  font-size: 11px;
+  color: var(--gray-400) !important;
+  margin-top: 3px;
+}
+
+/* ── Custom Inputs with Complete White Text ── */
+.custom-input {
+  background-color: var(--black) !important;
+  border: var(--border) !important;
+  color: var(--white) !important;
+  /* Forces input text to remain white */
+  border-radius: var(--radius) !important;
+  font-size: 13px !important;
+  height: 2.25em !important;
+}
+
+.custom-input:focus {
+  border-color: var(--white) !important;
+  box-shadow: none !important;
+}
+
+.custom-input::placeholder {
+  color: #555565 !important;
+}
+
+.custom-input option {
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+}
+
+/* Custom Select Dropdown Mechanics */
+.custom-select-wrapper::after {
+  border-color: var(--white) !important;
+  /* Force dropdown arrow to remain bright white */
+}
+
+/* ── File Upload Form Styling ── */
+.custom-file-input .file-cta {
+  background-color: var(--black) !important;
+  border: var(--border) !important;
+  color: var(--white) !important;
+  border-radius: var(--radius) 0 0 var(--radius) !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.custom-file-input .file-name {
+  background-color: var(--near-black) !important;
+  border: var(--border) !important;
+  border-left: none !important;
+  color: var(--white) !important;
+  border-radius: 0 var(--radius) var(--radius) 0 !important;
+  max-width: none !important;
+}
+
+/* ── Buttons ── */
+.custom-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--white) !important;
+  color: var(--white) !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius) !important;
+  transition: all 0.15s ease-in-out;
+}
+
+.custom-btn:hover {
+  background-color: var(--white) !important;
+  color: var(--black) !important;
+}
+
+.tag.is-dark-info {
+  background-color: var(--gray-800) !important;
+  color: var(--white) !important;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.custom-warning-tag {
+  background-color: #d4af37 !important;
+  color: var(--black) !important;
+  font-size: 10px;
   font-weight: bold;
 }
 
-.table-container {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 16px;
-  border-radius: 16px;
-  border: 2px solid rgba(139, 92, 246, 0.2);
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+.custom-delete-btn {
+  background-color: #992222 !important;
+  color: var(--white) !important;
+  border: none !important;
+  font-size: 11px !important;
+  border-radius: var(--radius) !important;
 }
 
-.table {
-  background: transparent;
-  color: #ffffff;
+.custom-delete-btn:hover {
+  background-color: #cc3333 !important;
 }
 
-.table thead th {
-  background: rgba(88, 28, 135, 0.5);
-  color: #e9d5ff;
-  border-color: rgba(139, 92, 246, 0.3);
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-  font-weight: bold;
+/* ── Accordion Animation Extensions ── */
+.card .transition-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
 
-.table tbody tr {
-  background: rgba(30, 20, 50, 0.4);
-  border-color: rgba(139, 92, 246, 0.2);
+.card.is-active .transition-content {
+  max-height: 500px;
 }
 
-.table tbody tr:hover {
-  background: rgba(88, 28, 135, 0.3);
+/* ── Clean Compact Leaderboard Table ── */
+.custom-table {
+  background-color: transparent !important;
+  margin-bottom: 0 !important;
 }
 
-.table td {
-  color: #ffffff;
-  border-color: rgba(139, 92, 246, 0.2);
+.custom-table th {
+  background-color: var(--near-black) !important;
+  color: var(--white) !important;
+  /* High contrast headers */
+  border-bottom: 2px solid var(--gray-800) !important;
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px !important;
 }
 
-iframe,
-video {
-  width: 260px;
-  border-radius: 10px;
-  border: 2px solid rgba(139, 92, 246, 0.3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+.custom-table td {
+  border-bottom: 1px solid var(--gray-800) !important;
+  color: var(--white) !important;
+  /* All data text bright white */
+  vertical-align: middle !important;
+  padding: 8px 12px !important;
+  font-size: 12px;
 }
 
-input,
-select,
-textarea {
-  background: rgba(30, 20, 50, 0.6);
-  border: 2px solid rgba(139, 92, 246, 0.3);
-  border-radius: 8px;
-  color: #ffffff;
-  padding: 10px;
-  transition: all 0.3s ease;
+.custom-table.table.is-hoverable tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04) !important;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  background: rgba(30, 20, 50, 0.8);
-  border-color: rgba(167, 139, 250, 0.6);
-  outline: none;
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: rgba(233, 213, 255, 0.5);
-}
-
-.button.is-primary {
-  background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
-  border: none;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
-  transition: all 0.3s ease;
-}
-
-.button.is-primary:hover {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.6);
-  transform: translateY(-2px);
-}
-
-.button.is-link {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  border: none;
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-.button.is-link:hover {
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-  box-shadow: 0 6px 16px rgba(96, 165, 250, 0.6);
-}
-
-.button.is-danger {
-  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-  border: none;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
-}
-
-.button.is-danger:hover {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.6);
-}
-
-.tag.is-warning {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  border: none;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
-}
-
-.subtitle {
-  color: #c4b5fd;
-  text-align: center !important;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-}
-
-.label {
-  color: #e9d5ff;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-}
-
-.help {
-  color: #c4b5fd;
-  font-size: 0.875rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-}
-
+/* Footer override */
 .footer {
-  background: rgba(30, 20, 50, 0.8);
-  border-top: 2px solid rgba(139, 92, 246, 0.3);
-  backdrop-filter: blur(10px);
+  background-color: var(--near-black) !important;
+  border-top: var(--border);
 }
 
-.footer .content {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+/* ==========================================================================
+   MINECRAFT DUNGEONS FORM UPGRADE (BIG TEXT & WIDE CONTAINER SPACE)
+   ========================================================================== */
+
+/* 1. Make the main page container use more of the screen space */
+.container.is-max-w-900 {
+  max-width: 1200px !important;
+  /* Bumped from 900px to 1200px to expand outward */
+  width: 95%;
 }
 
-.select select {
-  background: rgba(30, 20, 50, 0.6);
-  border: 2px solid rgba(139, 92, 246, 0.3);
-  color: #ffffff;
+/* 2. Global adjustments inside your custom boxes & cards */
+.compact-card,
+.compact-box {
+  padding: 2.5rem !important;
+  /* Increase breathing room inside containers */
 }
 
-.select select:focus {
-  border-color: rgba(167, 139, 250, 0.6);
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+/* 3. Make all labels and descriptions significantly larger */
+.compact-box .label {
+  font-size: 1.25rem !important;
+  /* Roughly 20px - Highly readable uppercase style */
+  color: #ffffff !important;
+  margin-bottom: 0.6rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.select select option {
-  background: rgba(30, 20, 50, 0.95);
-  color: #ffffff;
+/* Increase font size for input helper notes */
+.compact-box .help-text {
+  font-size: 0.95rem !important;
+  /* Keeps it clear but secondary to the main input */
+  color: #b5b5b5 !important;
+  margin-top: 0.4rem !important;
 }
 
-@media (max-width: 768px) {
-  .help-button {
-    display: block;
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    font-size: 11px !important;
-    padding: 10px 12px !important;
-    text-align: center;
-  }
+/* 4. Upgrade input boxes, selectors, and file targets to take up space */
+.compact-box .input.custom-input,
+.compact-box .custom-input select,
+.compact-box .custom-input {
+  font-size: 1.2rem !important;
+  /* Significantly larger typed text and placeholders */
+  height: auto !important;
+  padding: 12px 16px !important;
+  /* Taller text fields so the text doesn't look cramped */
+  background-color: #121214 !important;
+  /* Dark theme contrast */
+  color: #ffffff !important;
+  border-color: #363636 !important;
+}
 
-  iframe,
-  video {
-    width: 100%;
-    max-width: 260px;
-  }
+/* Keep select elements full-width with the new font updates */
+.custom-select-wrapper,
+.custom-select-wrapper select {
+  width: 100% !important;
+}
+
+/* 5. Upgrade the File upload element sizing */
+.custom-file-input .file-cta {
+  font-size: 1.1rem !important;
+  padding: 12px 20px !important;
+  background-color: #1f2023 !important;
+  color: #ffffff !important;
+}
+
+.custom-file-input .file-name {
+  font-size: 1.1rem !important;
+  padding: 12px 16px !important;
+  border-color: #363636 !important;
+  max-width: none !important;
+  /* Let the file name use all available space */
+}
+
+/* 6. Section & Box titles */
+.compact-box .subtitle.is-6 {
+  font-size: 1.4rem !important;
+  /* Standout segment headers (Basic Info, Gear Stats, etc.) */
+  border-bottom: 2px solid #363636 !important;
+  padding-bottom: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* 7. Center Submit Button Upgrade */
+.custom-btn {
+  font-size: 1.15rem !important;
+  /* Massive bold action buttons */
+  padding: 1.25rem 2.5rem !important;
+  height: auto !important;
+  font-weight: bold !important;
+  letter-spacing: 0.5px;
 }

@@ -1,248 +1,326 @@
- * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
- }
+/* ==========================================================================
+   MCD Calculator Reference Guide — Modern Dark Docs Layout
+   ========================================================================== */
 
- body {
-     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-     min-height: 100vh;
-     padding: 20px;
- }
+/* Global Reset & Base Theme */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
- .container {
-     background: rgba(255, 255, 255, 0.95);
-     border-radius: 20px;
-     padding: 40px;
-     max-width: 1200px;
-     margin: 0 auto;
-     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
- }
+body {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #0b0f19;
+    /* Pure deep black-blue canvas background */
+    color: #e2e8f0;
+    /* Crisp white-gray secondary text for high readability */
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
 
- h1 {
-     color: #2d3748;
-     text-align: center;
-     margin-bottom: 10px;
-     font-size: 2.5em;
-     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
- }
+/* Central Documentation Layout Container */
+.container {
+    background-color: #111827;
+    /* Solid charcoal dark primary element background */
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 45px;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
 
- .subtitle {
-     text-align: center;
-     color: #718096;
-     margin-bottom: 30px;
-     font-size: 1.1em;
- }
+/* Headings & Typography */
+h1 {
+    color: #ffffff;
+    /* Brilliant white accent focus */
+    text-align: left;
+    margin-bottom: 8px;
+    font-size: 2.25em;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
 
- .tabs {
-     display: flex;
-     gap: 10px;
-     margin-bottom: 30px;
-     border-bottom: 2px solid #e2e8f0;
-     flex-wrap: wrap;
- }
+.subtitle {
+    text-align: left;
+    color: #94a3b8;
+    /* Soft slate gray */
+    margin-bottom: 40px;
+    font-size: 1.15em;
+    font-weight: 400;
+}
 
- .tab {
-     padding: 15px 30px;
-     cursor: pointer;
-     background: transparent;
-     border: none;
-     font-size: 1.1em;
-     font-weight: 600;
-     color: #718096;
-     border-bottom: 3px solid transparent;
-     transition: all 0.3s;
- }
+/* Tab Navigation System */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid #1f2937;
+    flex-wrap: wrap;
+}
 
- .tab:hover {
-     color: #667eea;
- }
+.tab {
+    padding: 12px 24px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #94a3b8;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
 
- .tab.active {
-     color: #667eea;
-     border-bottom-color: #667eea;
- }
+.tab:hover {
+    color: #ffffff;
+    background-color: #1f2937;
+    border-radius: 6px 6px 0 0;
+}
 
- .tab-content {
-     display: none;
- }
+.tab.active {
+    color: #ffffff;
+    border-bottom: 2px solid #ffffff;
+    /* Clean white underline signature style */
+    font-weight: 700;
+}
 
- .tab-content.active {
-     display: block;
-     animation: fadeIn 0.3s;
- }
+/* Content Toggling Layouts */
+.tab-content {
+    display: none;
+}
 
- @keyframes fadeIn {
-     from {
-         opacity: 0;
-         transform: translateY(10px);
-     }
+.tab-content.active {
+    display: block;
+    animation: docsFadeIn 0.25s ease-out;
+}
 
-     to {
-         opacity: 1;
-         transform: translateY(0);
-     }
- }
+@keyframes docsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
 
- .chart-section {
-     background: #f7fafc;
-     border-radius: 15px;
-     padding: 25px;
-     margin-bottom: 25px;
-     border: 2px solid #e2e8f0;
- }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
- .chart-section h2 {
-     color: #2d3748;
-     margin-bottom: 15px;
-     font-size: 1.5em;
-     border-bottom: 3px solid #667eea;
-     padding-bottom: 10px;
- }
+/* Document Interactive Section Containers */
+.chart-section {
+    background-color: #111827;
+    padding: 0;
+    margin-bottom: 45px;
+}
 
- .multiplier-grid {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-     gap: 15px;
-     margin-top: 20px;
- }
+.chart-section h2 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #1f2937;
+}
 
- .multiplier-item {
-     background: white;
-     padding: 15px;
-     border-radius: 10px;
-     border-left: 4px solid #667eea;
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-     transition: transform 0.2s, box-shadow 0.2s;
- }
+/* Multiplier Layout Grid */
+.multiplier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
 
- .multiplier-item:hover {
-     transform: translateY(-3px);
-     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
- }
+.multiplier-item {
+    background-color: #1f2937;
+    /* Elevated card background */
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid #374151;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
 
- .multiplier-name {
-     font-weight: bold;
-     color: #4a5568;
-     margin-bottom: 5px;
- }
+.multiplier-item:hover {
+    border-color: #94a3b8;
+    transform: translateY(-2px);
+}
 
- .multiplier-value {
-     font-size: 1.3em;
-     color: #667eea;
-     font-weight: bold;
- }
+.multiplier-name {
+    font-weight: 500;
+    color: #94a3b8;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
 
- .info-box {
-     background: #fef5e7;
-     border-left: 4px solid #f39c12;
-     padding: 15px;
-     border-radius: 8px;
-     margin: 20px 0;
- }
+.multiplier-value {
+    font-size: 1.5em;
+    color: #ffffff;
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
 
- .info-box strong {
-     color: #d68910;
- }
+/* Info, Warnings, and Context Boxes */
+.info-box {
+    background-color: #1e1b4b;
+    /* Subtle dark blue deep callout alert container */
+    border-left: 4px solid #6366f1;
+    color: #e0e7ff;
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 30px 0;
+}
 
- .success-box {
-     background: #d4edda;
-     border-left: 4px solid #28a745;
-     padding: 15px;
-     border-radius: 8px;
-     margin: 20px 0;
- }
+.info-box strong {
+    color: #ffffff;
+}
 
- .success-box strong {
-     color: #155724;
- }
+.success-box {
+    background-color: #064e3b;
+    /* Subtle dark green success container */
+    border-left: 4px solid #10b981;
+    color: #d1fae5;
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 25px 0;
+}
 
- .formula-box {
-     background: #e8f4f8;
-     border: 2px solid #3498db;
-     border-radius: 10px;
-     padding: 20px;
-     margin: 20px 0;
-     font-family: 'Courier New', monospace;
- }
+.success-box strong {
+    color: #ffffff;
+}
 
- .formula-title {
-     color: #2980b9;
-     font-weight: bold;
-     font-size: 1.2em;
-     margin-bottom: 10px;
-     font-family: 'Segoe UI', sans-serif;
- }
+/* Formula & Math Display Elements */
+.formula-box {
+    background-color: #030712;
+    /* Terminal black-out workspace box background */
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px 0;
+}
 
- .formula {
-     font-size: 1.1em;
-     color: #2c3e50;
-     margin: 10px 0;
-     padding: 10px;
-     background: white;
-     border-radius: 5px;
- }
+.formula-title {
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+}
 
- .example-box {
-     background: #f8f9fa;
-     border: 2px dashed #6c757d;
-     border-radius: 10px;
-     padding: 20px;
-     margin: 20px 0;
- }
+/* Fixed Formula & Math Display Elements */
+.formula {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 1.05em;
+    color: #38bdf8;
+    margin: 8px 0;
+    padding: 14px;
+    background-color: #111827;
+    border-radius: 6px;
+    border: 1px solid #1f2937;
+    overflow-x: auto;
+    /* Adds a clean scrollbar if the formula is too wide */
+    white-space: nowrap;
+    /* Prevents equations from breaking into multiple rows */
+}
 
- .example-title {
-     color: #495057;
-     font-weight: bold;
-     font-size: 1.2em;
-     margin-bottom: 15px;
- }
+/* Guide Practice Examples Blocks */
+.example-box {
+    background-color: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 28px;
+    margin: 35px 0;
+}
 
- .step {
-     margin: 10px 0;
-     padding-left: 20px;
- }
+.example-title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.25em;
+    margin-bottom: 20px;
+}
 
- .step-number {
-     display: inline-block;
-     background: #667eea;
-     color: white;
-     width: 25px;
-     height: 25px;
-     border-radius: 50%;
-     text-align: center;
-     line-height: 25px;
-     margin-right: 10px;
-     font-weight: bold;
- }
+/* Fixed List Items & Ordered Reference Steps */
+.step {
+    margin: 20px 0;
+    padding-left: 0;
+    display: flex;
+    align-items: flex-start;
+    /* Aligns badge with the first line of text */
+    flex-direction: row;
+    /* Forces horizontal layout */
+    gap: 16px;
+    /* Clean spacing between number and text */
+}
 
- code {
-     background: #f4f4f4;
-     padding: 2px 6px;
-     border-radius: 3px;
-     font-family: 'Courier New', monospace;
-     color: #e74c3c;
- }
+.step-text {
+    color: #e2e8f0;
+    font-size: 1em;
+}
 
- @media (max-width: 768px) {
-     .container {
-         padding: 20px;
-     }
+.step-text strong {
+    color: #ffffff;
+}
 
-     h1 {
-         font-size: 1.8em;
-     }
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    color: #ffffff;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85em;
+    flex-shrink: 0;
+    /* Prevents the number box from squeezing/distorting */
+}
 
-     .multiplier-grid {
-         grid-template-columns: 1fr;
-     }
+/* Code Syntax Elements */
+code {
+    background-color: #1f2937;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #f43f5e;
+    /* Vibrant coral pink syntax highlighting colors */
+    font-size: 0.9em;
+    border: 1px solid #374151;
+}
 
-     .tabs {
-         flex-direction: column;
-     }
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 16px 8px;
+    }
 
-     .tab {
-         text-align: center;
-     }
- }
+    .container {
+        padding: 24px;
+    }
+
+    h1 {
+        font-size: 1.75em;
+    }
+
+    .multiplier-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .tab {
+        text-align: left;
+        padding: 10px 14px;
+        width: 100%;
+    }
+}
