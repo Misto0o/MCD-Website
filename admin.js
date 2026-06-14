@@ -6,7 +6,8 @@ import {
     where,
     onSnapshot,
     doc,
-    updateDoc
+    updateDoc,
+    deleteDoc,
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 import {
     getAuth,
@@ -140,6 +141,61 @@ function calculateEffectiveMob(input) {
 
 function initAdmin() {
 
+    const allSubmissionsDiv = document.getElementById("allSubmissions");
+
+    onSnapshot(collection(db, "submissions"), snapshot => {
+        allSubmissionsDiv.innerHTML = "";
+
+        snapshot.forEach(submission => {
+            const data = submission.data();
+
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+            <h3>${data.name}</h3>
+
+            <p><strong>Platform:</strong> ${data.platform}</p>
+            <p><strong>Mob Damage:</strong> ${data.mobDamage ?? "Pending"}</p>
+            <p><strong>Mob Health:</strong> ${data.mobHealth ?? "Pending"}</p>
+
+            <a href="${data.videoUrl}" target="_blank">
+                View Video
+            </a>
+
+<div class="admin-actions">
+
+    <input
+        type="number"
+        step="0.01"
+        placeholder="Mob Damage"
+        id="editDamage-${submission.id}"
+        value="${data.mobDamage ?? ""}"
+    >
+
+    <input
+        type="number"
+        step="0.01"
+        placeholder="Mob Health"
+        id="editHealth-${submission.id}"
+        value="${data.mobHealth ?? ""}"
+    >
+
+    <button class="save-btn" data-id="${submission.id}">
+        Save
+    </button>
+
+    <button class="delete-btn" data-id="${submission.id}">
+        Delete
+    </button>
+
+</div>
+        `;
+
+            allSubmissionsDiv.appendChild(card);
+        });
+    });
+
     const pendingDiv = document.getElementById("pendingList");
 
     const q = query(
@@ -263,4 +319,42 @@ function initAdmin() {
     } else {
         console.warn("admin.js: #calcBtn not found in DOM. Calculator won't work.");
     }
+    document.addEventListener("click", async e => {
+        if (!e.target.matches(".delete-btn")) return;
+
+        const id = e.target.dataset.id;
+
+        if (!confirm("Delete this submission?")) return;
+
+        await deleteDoc(doc(db, "submissions", id));
+
+        alert("Deleted.");
+    });
+
+    document.addEventListener("click", async e => {
+        if (!e.target.matches(".save-btn")) return;
+
+        const id = e.target.dataset.id;
+
+        const damage = parseFloat(
+            document.getElementById(`editDamage-${id}`).value
+        );
+
+        const health = parseFloat(
+            document.getElementById(`editHealth-${id}`).value
+        );
+
+        if (isNaN(damage) || isNaN(health)) {
+            alert("Enter both values.");
+            return;
+        }
+
+        await updateDoc(doc(db, "submissions", id), {
+            mobDamage: damage,
+            mobHealth: health
+        });
+
+        alert("Saved!");
+    });
+
 }
