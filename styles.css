@@ -38,9 +38,90 @@ body {
 /* ── Original MCD Banner Header Style ── */
 .mcd-hero-bg {
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(13, 13, 17, 0.95)),
-    url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1200&auto=format&fit=crop') no-repeat center center;
+    url('MCD_Background.png') no-repeat center center;
   background-size: cover;
   border-bottom: var(--border);
+}
+
+
+/* ── Auth area ── */
+#authArea {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.auth-sign-in-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.auth-sign-in-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#userMenu {
+  display: none;
+  position: absolute;
+  top: 44px;
+  right: 0;
+  background: #1a1a2e;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+#userMenu.open {
+  display: block;
+}
+
+#menuName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#menuEmail {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#signOutBtn {
+  width: 100%;
+  padding: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#signOutBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .tracking-wide {
@@ -350,4 +431,470 @@ label.label {
   height: auto !important;
   font-weight: bold !important;
   letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE OPTIMIZATIONS
+   ========================================================================== */
+
+/* TABLET & SMALLER DEVICES (768px and below) */
+@media (max-width: 768px) {
+  body {
+    font-size: 12px;
+  }
+
+  /* Reduce container width and padding */
+  .container.is-max-w-900 {
+    max-width: 100% !important;
+    width: 90% !important;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* Section padding adjustments */
+  .section {
+    padding: 1rem 0.5rem !important;
+  }
+
+  /* Hero section scaling */
+  .mcd-hero-bg {
+    background-size: cover;
+  }
+
+  .hero-body {
+    padding: 1.5rem 0.5rem !important;
+  }
+
+  .title.is-2 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .subtitle.is-6 {
+    font-size: 0.95rem !important;
+  }
+
+  /* Reduce card and box padding */
+  .compact-card,
+  .compact-box {
+    padding: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Scale down labels */
+  .compact-box .label {
+    font-size: 0.95rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .compact-box .help-text {
+    font-size: 0.8rem !important;
+    margin-top: 0.3rem !important;
+  }
+
+  /* Reduce input sizing for touch devices */
+  .compact-box .input.custom-input,
+  .compact-box .custom-input select,
+  .compact-box .custom-input {
+    font-size: 1rem !important;
+    padding: 10px 12px !important;
+    height: auto !important;
+  }
+
+  /* File upload adjustments */
+  .custom-file-input .file-cta {
+    font-size: 0.95rem !important;
+    padding: 10px 12px !important;
+  }
+
+  .custom-file-input .file-name {
+    font-size: 0.95rem !important;
+    padding: 10px 12px !important;
+  }
+
+  /* Subtitle in boxes */
+  .compact-box .subtitle.is-6 {
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: 0.4rem !important;
+  }
+
+  /* Button sizing */
+  .custom-btn {
+    font-size: 0.95rem !important;
+    padding: 0.75rem 1.5rem !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .button.is-small {
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* Responsive table - better than scrolling */
+  .table-container {
+    overflow-x: visible !important;
+    width: 100%;
+  }
+
+  .custom-table {
+    width: 100%;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+  }
+
+  .custom-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 0.5rem 0;
+  }
+
+  .custom-table thead {
+    display: none;
+  }
+
+  .custom-table td {
+    display: block;
+    text-align: left;
+    padding: 0.75rem 1rem !important;
+    border: none !important;
+    border-bottom: 1px solid #374151 !important;
+  }
+
+  .custom-table td:last-child {
+    border-bottom: none !important;
+  }
+
+  .custom-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Columns stack on mobile */
+  .columns.is-mobile {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    margin-top: -0.75rem;
+  }
+
+  .columns.is-mobile>.column {
+    padding: 0.75rem !important;
+  }
+
+  .column.is-6-desktop {
+    width: 100% !important;
+  }
+
+  /* Card header adjustments */
+  .card-header {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .card-header-title {
+    font-size: 1rem !important;
+  }
+
+  .card-header-icon {
+    padding-right: 0.75rem !important;
+  }
+
+  /* Help box adjustments */
+  .card.mb-4 .card-content {
+    padding: 1rem !important;
+  }
+}
+
+/* SMALL MOBILE (480px and below) */
+@media (max-width: 480px) {
+  body {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .container.is-max-w-900 {
+    width: 100% !important;
+    padding: 0 0.5rem;
+  }
+
+  .section {
+    padding: 0.75rem 0 !important;
+  }
+
+  /* Hero section for small phones */
+  .hero-body {
+    padding: 1rem 0.25rem !important;
+  }
+
+  .title.is-2 {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .subtitle.is-6 {
+    font-size: 0.8rem !important;
+  }
+
+  .py-5 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  /* Minimal card padding */
+  .compact-card,
+  .compact-box {
+    padding: 1rem !important;
+    margin-bottom: 0.75rem !important;
+    border-radius: 4px !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+  }
+
+  /* Scale labels down further */
+  .compact-box .label {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
+  .compact-box .help-text {
+    font-size: 0.7rem !important;
+    margin-top: 0.2rem !important;
+  }
+
+  /* Smaller inputs for small phones */
+  .compact-box .input.custom-input,
+  .compact-box .custom-input select,
+  .compact-box .custom-input {
+    font-size: 0.95rem !important;
+    padding: 8px 10px !important;
+  }
+
+  /* File upload tiny */
+  .custom-file-input .file-cta,
+  .custom-file-input .file-name {
+    font-size: 0.85rem !important;
+    padding: 8px 10px !important;
+  }
+
+  /* Smaller section titles */
+  .compact-box .subtitle.is-6 {
+    font-size: 1rem !important;
+    margin-bottom: 0.75rem !important;
+    padding-bottom: 0.3rem !important;
+  }
+
+  /* Full-width stacking buttons */
+  .custom-btn {
+    font-size: 0.85rem !important;
+    padding: 0.6rem 1rem !important;
+    width: 100% !important;
+  }
+
+  .button.is-small {
+    padding: 0.3rem 0.6rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Mobile card layout for table */
+  .table-container {
+    overflow-x: visible !important;
+    width: 100%;
+  }
+
+  .custom-table {
+    width: 100%;
+    display: block;
+  }
+
+  .custom-table thead {
+    display: none;
+  }
+
+  .custom-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .custom-table tbody tr {
+    display: block;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .custom-table td {
+    display: block;
+    padding: 0.6rem 0.8rem !important;
+    border: none !important;
+    border-bottom: 1px solid #374151 !important;
+    font-size: 0.9rem !important;
+    text-align: left;
+  }
+
+  .custom-table td:last-child {
+    border-bottom: none !important;
+  }
+
+  .custom-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #60a5fa;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .custom-table.table.is-hoverable tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Minimal table */
+  .custom-table th,
+  .custom-table td {
+    font-size: 10px !important;
+    padding: 5px 6px !important;
+  }
+
+  .custom-table th {
+    padding: 6px 8px !important;
+  }
+
+  /* Adjust columns on very small screens */
+  .columns.is-mobile>.column {
+    padding: 0.5rem !important;
+  }
+
+  .column.is-12-mobile {
+    width: 100% !important;
+  }
+
+  /* Minimize margins and padding across the board */
+  .mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+
+  .mb-5 {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .py-1 {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  .py-3 {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .py-0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Card header spacing */
+  .card-header {
+    padding: 0.6rem 0.8rem !important;
+  }
+
+  .card-header-title {
+    font-size: 0.95rem !important;
+  }
+
+  .card-header-icon {
+    padding-right: 0.5rem !important;
+  }
+
+  /* Rules list adjustments */
+  .rules-list li {
+    margin-bottom: 0.5rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .rules-list {
+    padding-left: 1.25rem !important;
+  }
+}
+
+/* EXTRA SMALL (320px - very tiny phones) */
+@media (max-width: 360px) {
+  .title.is-2 {
+    font-size: 1.2rem !important;
+    word-break: break-word;
+  }
+
+  .subtitle.is-6 {
+    font-size: 0.7rem !important;
+  }
+
+  .compact-card,
+  .compact-box {
+    padding: 0.75rem !important;
+  }
+
+  .custom-btn {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Ultra-compact table for tiny phones */
+  .custom-table {
+    font-size: 0.8rem;
+  }
+
+  .custom-table tbody tr {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 4px;
+    padding: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-table td {
+    padding: 0.5rem 0.6rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .custom-table td::before {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.2rem;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    font-size: 9px !important;
+    padding: 4px 5px !important;
+  }
 }

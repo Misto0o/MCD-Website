@@ -19,19 +19,39 @@
 
 <body>
     <header class="mcd-hero-bg">
-        <div class="hero-body has-text-centered py-5">
-            <h1 class="title has-text-white is-2 mb-2 tracking-wide">
-                ⚔️ Minecraft Dungeons ⚔️
-            </h1>
-            <p class="subtitle has-text-white is-6 m-0 opacity-90">
-                Difficult Levels Leaderboard
-            </p>
+        <div class="hero-body py-5" style="position:relative;">
+
+            <!-- Profile area - top right -->
+            <div id="authArea">
+                <button id="signInBtn" class="auth-sign-in-btn">
+                    Sign in with Google
+                </button>
+                <div id="userAvatar" style="display:none; position:relative;">
+                    <img id="userAvatarImg" width="36" height="36" alt="Profile"
+                        style="border-radius:50%; border:2px solid rgba(255,255,255,0.5); cursor:pointer; display:block;">
+                    <div id="userMenu">
+                        <p id="menuName"></p>
+                        <p id="menuEmail"></p>
+                        <button id="signOutBtn">Sign out</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="has-text-centered">
+                <h1 class="title has-text-white is-2 mb-2 tracking-wide">
+                    ⚔️ Minecraft Dungeons ⚔️
+                </h1>
+                <p class="subtitle has-text-white is-6 m-0 opacity-90">
+                    Difficult Levels Leaderboard
+                </p>
+            </div>
         </div>
     </header>
 
     <section class="section pt-4">
         <div class="container is-max-w-900">
 
+            <!-- RULES -->
             <div class="card mb-4 compact-card">
                 <header class="card-header" style="cursor: pointer;"
                     onclick="this.parentElement.classList.toggle('is-active');">
@@ -47,24 +67,37 @@
                         <ul class="m-0 pl-4 rules-list">
                             <li>Only items that can be obtained through normal gameplay and are theoretically possible
                                 in-game may be used. Extremely rare combinations are allowed, but impossible items (such
-                                as a Mystery Armor with 3 perk combinations and that cannot naturally generate) are not.</li>
+                                as a Mystery Armor with 3 perk combinations and that cannot naturally generate) are not.
+                            </li>
                             <li>Accounts for the power level of gear used.</li>
-                            <li>Players must show the gear used and level played for atleast 1-3 seconds and must be CLEAR on
-                                the damage and health output of the gear and be shown (can be at the very start of the
+                            <li>Players must show the gear used and level played for atleast 1-3 seconds and must be
+                                CLEAR on the damage and health output of the gear and be shown (can be at the very start
+                                of the
                                 video).</li>
-                            <li>Modded items are allowed if they don't give any insane combat advantage(Like doing the intger limit in one hit without any buildup) (arrow
+                            <li>Modded items are allowed if they don't give any insane combat advantage (Like doing the
+                                integer limit in one hit without any buildup) (arrow
                                 farming/cosmetic/gilded/visual, etc are allowed).</li>
                             <li>No Hitless Gameplay allowed.</li>
                             <li>You may switch items around as long as rules are followed. IF you do, make sure to
                                 clearly show the changes in your video.</li>
-                            <li>Levels not allowed: The Stronghold, Squid Coast, ???.</li>
+                            <li>Levels not allowed: The Stronghold, Squid Coast, ???, Creeper Woods.</li>
                             <li>Any modifiers are allowed, but must be shown and clearly stated in the video.</li>
                             <li>No TAS (Tool-Assisted Speedrun) allowed.</li>
+                            <li>Any / all builds used must tank at least 1 hit and kill at least 1 mob without the void,
+                                love medallion, or wild rage, and must finish the level with the same build whether or
+                                not you kill more mobs.</li>
+                            <li>Must kill most mobs in the level, do not just rush to the end and kill the boss/complete
+                                the level. (If you do rush to the end, make sure to clearly show that you killed most
+                                mobs in the level and that you didn't just rush to the end and kill the boss with a
+                                super overpowered/Hitless build.)</li>
+                            <li>You cannot bypass rules with unreasonable build swapping/the main build must stay
+                                within the rules.</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
+            <!-- HELP -->
             <div class="card mb-4 compact-card">
                 <div class="card-content py-3 has-text-centered">
                     <p class="mb-2 has-text-white is-size-7">💡 <strong>Need Help?</strong></p>
@@ -74,7 +107,20 @@
                 </div>
             </div>
 
-            <div class="card mb-5 compact-card">
+            <!-- SUBMIT SECTION -->
+
+            <!-- Shown when signed out -->
+            <div id="signInPrompt" class="card mb-5 compact-card" style="display:none;">
+                <div class="card-content py-5 has-text-centered">
+                    <p class="has-text-white mb-3">Want to submit your run?</p>
+                    <button id="signInPromptBtn" class="button is-link is-small custom-btn">
+                        Sign in with Google For Free!
+                    </button>
+                </div>
+            </div>
+
+            <!-- Shown when signed in -->
+            <div id="submitSection" class="card mb-5 compact-card" style="display:none;">
                 <div class="card-content py-4">
                     <h2 class="title is-5 has-text-white has-text-centered mb-4">🎮 Submit Your Run</h2>
                     <form id="uploadForm">
@@ -291,6 +337,7 @@
                 </div>
             </div>
 
+            <!-- LEADERBOARD -->
             <div class="card compact-card">
                 <div class="card-content py-4">
                     <h2 class="title is-5 has-text-white has-text-centered mb-4">🏆 Leaderboard</h2>
@@ -303,6 +350,7 @@
                                     <th>Mob Damage</th>
                                     <th>Mob Health</th>
                                     <th>Platform</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="tableBody"></tbody>
@@ -330,14 +378,12 @@
 
     <script type="module" src="script.js"></script>
     <script>
-        // Update input file name feedback
-        const fileInput = document.getElementById('fileRunInput');
-        if (fileInput) {
-            fileInput.onchange = () => {
-                if (fileInput.files.length > 0) {
-                    document.getElementById('fileRunName').textContent = fileInput.files[0].name;
-                }
-            };
+        // Sign in prompt button mirrors the header button
+        const signInPromptBtn = document.getElementById('signInPromptBtn');
+        if (signInPromptBtn) {
+            signInPromptBtn.addEventListener('click', () => {
+                document.getElementById('signInBtn').click();
+            });
         }
 
         if ('serviceWorker' in navigator) {

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MCD Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body>
+
+    <div id="loginScreen">
+        <h2>Admin Login</h2>
+        <input id="adminEmail" type="email" placeholder="Email">
+        <input id="adminPassword" type="password" placeholder="Password">
+        <button id="loginBtn">Sign In</button>
+    </div>
+
+    <h1>🛠 MCD Admin Dashboard</h1>
+
+
+    <div id="adminPanel" style="display:none;">
+
+        <!-- ── PENDING MODERATION ── -->
+        <section>
+            <h2>Pending Submissions</h2>
+            <div id="pendingList">Loading…</div>
+        </section>
+
+        <hr>
+
+        <!-- ── ADMIN CALCULATOR ── -->
+        <section class="calculator">
+            <h2>Effective Difficulty Calculator</h2>
+            <p class="calc-hint">
+                Enter the player's gear stats to calculate their effective mob damage and mob health multipliers.
+                Leave Player Damage %, Player Health %, Mob Health %, and Mob Damage % as 0 if not applicable.
+            </p>
+
+            <div class="calc-grid">
+                <label>
+                    Armor +Health
+                    <input id="armorHealth" type="number" placeholder="e.g. 1803697">
+                </label>
+
+                <label>
+                    Weapon Type
+                    <select id="weaponType">
+                        <option value="anchor">Anchor / Encrusted Anchor</option>
+                        <option value="axe">Axe / Firebrand / Highland Axe</option>
+                        <option value="backstabber">Backstabber / Swift Striker</option>
+                        <option value="bone_club">Bone Club / Bone Cudgel</option>
+                        <option value="sawblade">Broken Sawblade / Mechanized Sawblade</option>
+                        <option value="claymore">Claymore / Great Axeblade / Broadsword / Frost Slayer / Heartstealer
+                        </option>
+                        <option value="coral_blade">Coral Blade / Sponge Striker</option>
+                        <option value="cutlass">Cutlass / Nameless Blade</option>
+                        <option value="cursed_axe">Cursed Axe / Whirlwind</option>
+                        <option value="daggers">Daggers / Fangs of Frost / Shear Daggers / Moon Daggers</option>
+                        <option value="dancers_sword">Dancers Sword / Sparkler</option>
+                        <option value="fighters_bindings">Fighters Bindings</option>
+                        <option value="freezing_foil">Freezing Foil</option>
+                        <option value="gauntlets">Gauntlets / Maulers / Soul Fist</option>
+                        <option value="glaive">Glaive / Venom Glaive / Grave Bane / Cackling Broom</option>
+                        <option value="hammer">Hammer / Stormlander / Hammer of Gravity</option>
+                        <option value="katana">Katana / Dark Katana / Masters Katana</option>
+                        <option value="mace">Mace / Flail / Suns Grace</option>
+                        <option value="obsidian_sword">Obsidian Sword / Starless Night</option>
+                        <option value="pickaxe">Pickaxe / Diamond Pickaxe</option>
+                        <option value="rapier">Rapier / Bee Stinger</option>
+                        <option value="sickles">Sickles / The Last Laugh / Nightmare Bites</option>
+                        <option value="soul_knife">Soul Knife / Eternal Knife / Truthseeker</option>
+                        <option value="soul_scythe">Soul Scythe / Jailor's Scythe / Frost Scythe / Skull Scythe</option>
+                        <option value="spear">Spear / Whispering Spear / Fortune Spear / Spine-Chill Spear</option>
+                        <option value="staff">Staff / Battle Staff / Of Terror / Growing Staff</option>
+                        <option value="sword">Sword / Diamond Sword / Hawkbrand / Sinister Sword</option>
+                        <option value="tempest_knife">Tempest Knife / Resolute Tempest Knife / Chill Gale Knife</option>
+                        <option value="void_touched">Void Touched Blades / Beginning and End</option>
+                        <option value="whip">Whip / Vine Whip</option>
+                    </select>
+                </label>
+
+                <label>
+                    Weapon Damage (lower of range)
+                    <input id="weaponDamage" type="number" placeholder="e.g. 1825077">
+                </label>
+
+                <label>
+                    Trial Multiplier
+                    <input id="trialMultiplier" type="number" step="0.001" placeholder="e.g. 3.814">
+                </label>
+
+                <label>
+                    Player Damage Mod % <span class="hint">(positive = buff, negative = nerf; 0 if none)</span>
+                    <input id="playerDamage" type="number" placeholder="0">
+                </label>
+
+                <label>
+                    Player Health Mod % <span class="hint">(positive = more HP, negative = less HP; 0 if none)</span>
+                    <input id="playerHealth" type="number" placeholder="0">
+                </label>
+
+                <label>
+                    Mob Health % <span class="hint">(0 if none)</span>
+                    <input id="mobHealth" type="number" placeholder="0">
+                </label>
+
+                <label>
+                    Mob Damage % <span class="hint">(0 if none)</span>
+                    <input id="mobDamage" type="number" placeholder="0">
+                </label>
+            </div>
+
+            <button id="calcBtn">Calculate</button>
+
+            <div id="results"></div>
+        </section>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

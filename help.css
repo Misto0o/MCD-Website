@@ -303,6 +303,7 @@ code {
 
     .container {
         padding: 24px;
+        max-width: 100%;
     }
 
     h1 {
@@ -322,5 +323,329 @@ code {
         text-align: left;
         padding: 10px 14px;
         width: 100%;
+    }
+
+    /* Example boxes on tablet */
+    .example-box {
+        padding: 20px;
+        margin: 25px 0;
+        border-radius: 6px;
+    }
+
+    .example-title {
+        font-size: 1.1em;
+        margin-bottom: 16px;
+    }
+
+    /* Steps in examples */
+    .step {
+        margin: 16px 0;
+        gap: 12px;
+    }
+
+    .step-number {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75em;
+    }
+
+    .step-text {
+        font-size: 0.95em;
+    }
+
+    /* Code and formulas */
+    code {
+        font-size: 0.85em;
+        padding: 2px 4px;
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    .formula {
+        font-size: 0.95em;
+        padding: 12px;
+        margin: 6px 0;
+        white-space: normal;
+        overflow-x: visible;
+        word-break: break-word;
+    }
+
+    .formula-box {
+        padding: 18px;
+        margin: 18px 0;
+    }
+
+    /* Info boxes */
+    .info-box,
+    .success-box {
+        padding: 16px;
+        margin: 20px 0;
+        font-size: 0.95em;
+    }
+
+    .multiplier-item {
+        padding: 14px;
+    }
+}
+
+/* SMALL MOBILE (480px and below) */
+@media (max-width: 480px) {
+    body {
+        padding: 12px 6px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .container {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 6px;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+
+    /* Tab navigation */
+    .tabs {
+        gap: 2px;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        padding: 8px 10px;
+        font-size: 0.85em;
+        font-weight: 500;
+    }
+
+    .tab.active {
+        border-bottom: 2px solid #ffffff;
+    }
+
+    /* Chart multiplier grid */
+    .chart-section {
+        margin-bottom: 30px;
+    }
+
+    .chart-section h2 {
+        font-size: 1.15em;
+        margin-bottom: 16px;
+    }
+
+    .multiplier-grid {
+        gap: 12px;
+    }
+
+    .multiplier-item {
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .multiplier-name {
+        font-size: 0.8em;
+        margin-bottom: 4px;
+    }
+
+    .multiplier-value {
+        font-size: 1.2em;
+    }
+
+    /* EXAMPLE BOXES - Redesigned for better readability */
+    .example-box {
+        padding: 0;
+        margin: 24px 0;
+        border-radius: 0;
+        background-color: transparent;
+        border: none;
+    }
+
+    .example-title {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+        color: #ffffff;
+        font-weight: 700;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #374151;
+    }
+
+    /* Step layout - Much more spacious */
+    .step {
+        margin: 18px 0;
+        gap: 12px;
+        padding: 14px;
+        background-color: #1f2937;
+        border: 1px solid #374151;
+        border-radius: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .step-number {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85em;
+        flex-shrink: 0;
+        margin-bottom: 8px;
+    }
+
+    .step-text {
+        font-size: 0.95rem;
+        color: #e2e8f0;
+        line-height: 1.6;
+        width: 100%;
+    }
+
+    .step-text strong {
+        color: #60a5fa;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    /* Code elements - More prominent */
+    code {
+        font-size: 0.9em;
+        padding: 4px 8px;
+        background-color: #111827;
+        border: 1px solid #374151;
+        border-radius: 4px;
+        word-break: break-word;
+        white-space: normal;
+        display: inline-block;
+        color: #60a5fa;
+        font-weight: 600;
+        margin: 4px 2px;
+    }
+
+    /* Formula boxes */
+    .formula {
+        font-size: 0.9em;
+        padding: 12px;
+        margin: 8px 0;
+        overflow-x: visible;
+        white-space: normal;
+        word-break: break-word;
+        border-radius: 4px;
+        background-color: #111827;
+    }
+
+    .formula-box {
+        padding: 16px;
+        margin: 16px 0;
+        border-radius: 6px;
+        background-color: #1f2937;
+    }
+
+    .formula-title {
+        font-size: 0.85em;
+        margin-bottom: 10px;
+        color: #94a3b8;
+    }
+
+    /* Info and success boxes */
+    .info-box {
+        padding: 16px;
+        margin: 20px 0;
+        border-left: 4px solid #6366f1;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        border-radius: 0 6px 6px 0;
+        background-color: #1e1b4b;
+    }
+
+    .success-box {
+        padding: 16px;
+        margin: 20px 0;
+        border-left: 4px solid #10b981;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        border-radius: 0 6px 6px 0;
+        background-color: #064e3b;
+    }
+
+    .info-box strong,
+    .success-box strong {
+        color: #ffffff;
+        font-weight: 600;
+    }
+}
+
+/* EXTRA SMALL (360px and below) */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.2rem;
+        letter-spacing: normal;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 12px;
+    }
+
+    body {
+        padding: 10px 4px;
+    }
+
+    .tab {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+
+    .chart-section h2 {
+        font-size: 1.05em;
+        margin-bottom: 12px;
+    }
+
+    .multiplier-value {
+        font-size: 1.1em;
+    }
+
+    .example-box {
+        padding: 12px;
+        margin: 14px 0;
+    }
+
+    .example-title {
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+    }
+
+    .step {
+        margin: 10px 0;
+        gap: 8px;
+    }
+
+    .step-number {
+        width: 20px;
+        height: 20px;
+        font-size: 0.65em;
+    }
+
+    .step-text {
+        font-size: 0.85rem;
+    }
+
+    code {
+        font-size: 0.75em;
+        padding: 1px 3px;
+    }
+
+    .formula {
+        font-size: 0.8em;
+        padding: 8px;
+    }
+
+    .info-box,
+    .success-box {
+        padding: 12px;
+        font-size: 0.85rem;
     }
 }

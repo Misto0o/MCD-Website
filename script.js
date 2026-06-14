@@ -1,9 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import {
-    getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc
+    getFirestore, collection, addDoc, onSnapshot, query, deleteDoc, doc
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
 import {
-    getAuth, signInAnonymously, setPersistence, browserLocalPersistence
+    getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -18,8 +18,50 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
-await setPersistence(auth, browserLocalPersistence);
-if (!auth.currentUser) await signInAnonymously(auth);
+const provider = new GoogleAuthProvider();
+
+// ── Auth UI ──────────────────────────────────────────────────────────────────
+
+const signInBtn = document.getElementById("signInBtn");
+const userAvatar = document.getElementById("userAvatar");
+const userMenu = document.getElementById("userMenu");
+const signOutBtn = document.getElementById("signOutBtn");
+const submitSection = document.getElementById("submitSection");
+
+signInBtn.addEventListener("click", () => signInWithPopup(auth, provider));
+signOutBtn.addEventListener("click", () => signOut(auth));
+
+// Toggle dropdown on avatar click
+userAvatar.addEventListener("click", (e) => {
+    e.stopPropagation();
+    userMenu.classList.toggle("open");
+});
+document.addEventListener("click", () => userMenu.classList.remove("open"));
+
+onAuthStateChanged(auth, user => {
+    if (user) {
+        // Show avatar, hide sign-in button
+        signInBtn.style.display = "none";
+        userAvatar.style.display = "flex";
+        userAvatar.querySelector("img").src = user.photoURL || "";
+        userAvatar.querySelector("img").alt = user.displayName || "User";
+        document.getElementById("menuName").textContent = user.displayName || "User";
+        document.getElementById("menuEmail").textContent = user.email || "";
+        // Show submit form
+        submitSection.style.display = "block";
+        document.getElementById("signInPrompt").style.display = "none";
+    } else {
+        // Show sign-in button, hide avatar
+        signInBtn.style.display = "flex";
+        userAvatar.style.display = "none";
+        userMenu.classList.remove("open");
+        // Hide submit form, show prompt
+        submitSection.style.display = "none";
+        document.getElementById("signInPrompt").style.display = "block";
+    }
+});
+
+// ── Calculation ───────────────────────────────────────────────────────────────
 
 const BASE_ARMOR_HEALTH = 1917047;
 
@@ -58,14 +100,9 @@ const WEAPON_BASE_DAMAGES = {
 
 function calculateEffectiveMob(input) {
     const {
-        trialMultiplier,
-        mobHealthPercent,
-        mobDamagePercent,
-        playerDamageDecrease,
-        playerHealthIncrease,
-        armorHealth,
-        meleeType,
-        meleeDamage
+        trialMultiplier, mobHealthPercent, mobDamagePercent,
+        playerDamageDecrease, playerHealthIncrease,
+        armorHealth, meleeType, meleeDamage
     } = input;
 
     const mobHealthMultiplier = 1 + (mobHealthPercent / 100);
@@ -77,47 +114,45 @@ function calculateEffectiveMob(input) {
     }
 
     const playerHealthMultiplier = playerHealthIncrease
-        ? (playerHealthIncrease > 0
-            ? (1 + playerHealthIncrease / 100)
-            : (1 + playerHealthIncrease / 100))
+        ? (1 + playerHealthIncrease / 100)
         : 1;
 
     const meleeBaseDamage = WEAPON_BASE_DAMAGES[meleeType] || 251;
-
     const armorRatio = (armorHealth + 100) / (BASE_ARMOR_HEALTH + 100);
     const effectiveMobDamage = (trialMultiplier * mobDamageMultiplier) / (armorRatio * playerHealthMultiplier);
 
     const weaponRatio = (meleeDamage + 100) / (meleeBaseDamage + 100);
     const effectiveMobHealth = (trialMultiplier * mobHealthMultiplier * playerDamageBannerEffect) / weaponRatio;
 
-    return {
-        mobDamage: effectiveMobDamage,
-        mobHealth: effectiveMobHealth
-    };
+    return { mobDamage: effectiveMobDamage, mobHealth: effectiveMobHealth };
 }
 
+// ── Form submit ───────────────────────────────────────────────────────────────
+
 const form = document.getElementById("uploadForm");
-const tableBody = document.getElementById("tableBody");
 
 form.addEventListener("submit", async e => {
     e.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please sign in to submit a run.");
+        return;
+    }
 
     const name = document.getElementById("nameInput").value.trim();
     const videoUrl = document.getElementById("urlInput").value.trim();
     const platform = document.getElementById("platformSelect").value;
     const fileInput = document.getElementById("fileRunInput");
 
-    // Require either a URL string or a local file upload run
     if (!name || (!videoUrl && (!fileInput || fileInput.files.length === 0)) || !platform) {
-        alert("Please fill out your Name, Platform, and provide either a Video URL or upload a Run File.");
+        alert("Please fill out your Name, Platform, and provide either a Video URL or upload a file.");
         return;
     }
 
-    // Process file upload fallback conversion to temporary string if using purely local storage paths
     let cleanVideoUrl = videoUrl;
     if (fileInput && fileInput.files.length > 0) {
         const uploadedFile = fileInput.files[0];
-        // Generate valid file reference path string format
         cleanVideoUrl = `localfile://${uploadedFile.name}#${URL.createObjectURL(uploadedFile)}`;
     }
 
@@ -130,25 +165,11 @@ form.addEventListener("submit", async e => {
     const mobHealthPercent = document.getElementById("mobHealthInput").value.trim();
     const mobDamagePercent = document.getElementById("mobDamageInput").value.trim();
 
-    const allStatsFilled =
-        armorHealth &&
-        meleeType &&
-        meleeDamage &&
-        trialMultiplier &&
-        playerDamageMod &&
-        playerHealthMod &&
-        mobHealthPercent !== '' &&
-        mobDamagePercent !== '';
+    const allStatsFilled = armorHealth && meleeType && meleeDamage && trialMultiplier &&
+        playerDamageMod && playerHealthMod && mobHealthPercent !== '' && mobDamagePercent !== '';
 
-    const anyStatsFilled =
-        armorHealth ||
-        meleeType ||
-        meleeDamage ||
-        trialMultiplier ||
-        playerDamageMod ||
-        playerHealthMod ||
-        mobHealthPercent !== '' ||
-        mobDamagePercent !== '';
+    const anyStatsFilled = armorHealth || meleeType || meleeDamage || trialMultiplier ||
+        playerDamageMod || playerHealthMod || mobHealthPercent !== '' || mobDamagePercent !== '';
 
     if (anyStatsFilled && !allStatsFilled) {
         alert("⚠️ If you enter stats, you must complete ALL stat fields — or leave them all blank.");
@@ -170,7 +191,6 @@ form.addEventListener("submit", async e => {
             meleeType,
             meleeDamage: parseFloat(meleeDamage)
         });
-
         mobDamage = results.mobDamage;
         mobHealth = results.mobHealth;
     }
@@ -190,111 +210,84 @@ form.addEventListener("submit", async e => {
         mobDamage,
         mobHealth,
         needsModeration,
-        userId: auth.currentUser?.uid,
+        userId: user.uid,
+        userName: user.displayName || "Unknown",
+        userPhoto: user.photoURL || "",
         createdAt: Date.now()
     });
 
     alert("✅ Submission successful!");
     form.reset();
-    const fileLabelName = document.getElementById('fileRunName');
+    const fileLabelName = document.getElementById("fileRunName");
     if (fileLabelName) fileLabelName.textContent = "No file uploaded";
 });
 
-// --- UPDATED LEADERBOARD LISTENER WITH PRIMARY CALCULATION SORTING ---
-// We query all submissions, then use client-side logic to filter, sequence, and position them.
+// ── Leaderboard ───────────────────────────────────────────────────────────────
+
+const tableBody = document.getElementById("tableBody");
+
 const q = query(collection(db, "submissions"));
 onSnapshot(q, snapshot => {
     tableBody.innerHTML = "";
 
-    // 1. Map documents into a standard array so we can sort them locally
     const submissions = [];
-    snapshot.forEach(docSnap => {
-        submissions.push({
-            id: docSnap.id,
-            data: docSnap.data()
-        });
-    });
+    snapshot.forEach(docSnap => submissions.push({ id: docSnap.id, data: docSnap.data() }));
 
-    // 2. Sort Logic: Higher Mob Damage first. If equal, higher Mob Health wins. Pending items go to the bottom.
     submissions.sort((a, b) => {
-        // Handle pending moderation status items (push them to the absolute bottom)
         if (a.data.needsModeration && !b.data.needsModeration) return 1;
         if (!a.data.needsModeration && b.data.needsModeration) return -1;
-        if (a.data.needsModeration && b.data.needsModeration) {
-            return b.data.createdAt - a.data.createdAt; // Newer pending runs show first among pending items
-        }
+        if (a.data.needsModeration && b.data.needsModeration) return b.data.createdAt - a.data.createdAt;
 
-        // Primary Sort: Effective Mob Damage (Descending order)
         const damageA = a.data.mobDamage ?? 0;
         const damageB = b.data.mobDamage ?? 0;
-        if (damageB !== damageA) {
-            return damageB - damageA;
-        }
+        if (damageB !== damageA) return damageB - damageA;
 
-        // Secondary Sort (Tie-breaker): Effective Mob Health (Descending order)
-        const healthA = a.data.mobHealth ?? 0;
-        const healthB = b.data.mobHealth ?? 0;
-        return healthB - healthA;
+        return (b.data.mobHealth ?? 0) - (a.data.mobHealth ?? 0);
     });
 
-    // 3. Render the properly sorted leaderboard list
     submissions.forEach(item => {
         const d = item.data;
         const row = document.createElement("tr");
         const video = detectEmbed(d.videoUrl);
+        const currentUid = auth.currentUser?.uid;
 
         let mobDamageDisplay, mobHealthDisplay;
-
         if (d.needsModeration) {
             mobDamageDisplay = '<span class="tag is-warning custom-warning-tag">Pending</span>';
             mobHealthDisplay = '<span class="tag is-warning custom-warning-tag">Pending</span>';
         } else {
-            const mobDamage = d.mobDamage ?? 0;
-            const mobHealth = d.mobHealth ?? 0;
-            mobDamageDisplay = `${mobDamage.toFixed(2)}x`;
-            mobHealthDisplay = `${mobHealth.toFixed(2)}x`;
+            mobDamageDisplay = `${(d.mobDamage ?? 0).toFixed(2)}x`;
+            mobHealthDisplay = `${(d.mobHealth ?? 0).toFixed(2)}x`;
         }
 
+        const canDelete = currentUid && currentUid === d.userId;
+
         row.innerHTML = `
-            <td class="has-text-white font-weight-bold">${d.name}</td>
-            <td>${video}</td>
-            <td class="has-text-white font-mono">${mobDamageDisplay}</td>
-            <td class="has-text-white font-mono">${mobHealthDisplay}</td>
-            <td class="has-text-white">${d.platform}</td>
-            <td>${d.userId === auth.currentUser?.uid ? `<button class="button is-danger is-small custom-delete-btn" data-id="${item.id}">Delete</button>` : ""}</td>
+            <td data-label="Player">${d.name}</td>
+            <td data-label="Video">${video}</td>
+            <td data-label="Mob Damage">${mobDamageDisplay}</td>
+            <td data-label="Mob Health">${mobHealthDisplay}</td>
+            <td data-label="Platform">${d.platform}</td>
+            <td data-label="">${canDelete ? `<button class="button is-danger is-small custom-delete-btn" data-id="${item.id}">Delete</button>` : ""}</td>
         `;
         tableBody.appendChild(row);
     });
 });
 
 function detectEmbed(url) {
-    if (!url) return `<span class="has-text-grey">No video available</span>`;
-
-    // Handle local file uploads converted to object URLs dynamically
+    if (!url) return `<span>No video</span>`;
     if (url.startsWith("localfile://")) {
-        const actualBlobUrl = url.split("#")[1];
-        if (actualBlobUrl) {
-            return `<video width="260" height="160" controls style="border: 1px solid #444; border-radius:4px;"><source src="${actualBlobUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
-        }
+        const blobUrl = url.split("#")[1];
+        if (blobUrl) return `<video width="260" height="160" controls><source src="${blobUrl}" type="video/mp4"></video>`;
     }
-
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
         let videoId = "";
-
-        if (url.includes("watch?v=")) {
-            videoId = url.split("watch?v=")[1].split("&")[0];
-        } else if (url.includes("youtu.be/")) {
-            videoId = url.split("youtu.be/")[1].split("?")[0];
-        } else if (url.includes("embed/")) {
-            videoId = url.split("embed/")[1].split("?")[0];
-        }
-
-        if (videoId) {
-            return `<iframe width="260" height="160" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border:1px solid #444; border-radius:4px;"></iframe>`;
-        }
+        if (url.includes("watch?v=")) videoId = url.split("watch?v=")[1].split("&")[0];
+        else if (url.includes("youtu.be/")) videoId = url.split("youtu.be/")[1].split("?")[0];
+        else if (url.includes("embed/")) videoId = url.split("embed/")[1].split("?")[0];
+        if (videoId) return `<iframe width="260" height="160" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
     }
-
-    return `<a href="${url}" target="_blank" class="button is-small is-link custom-btn">Watch Video</a>`;
+    return `<a href="${url}" target="_blank" class="button is-small is-link">Watch Video</a>`;
 }
 
 document.addEventListener("click", async e => {

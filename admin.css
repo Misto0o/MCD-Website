@@ -1,0 +1,222 @@
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: #fff;
+}
+
+h2 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #888;
+    margin-bottom: 14px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 36px 0;
+}
+
+/* ── Pending cards ── */
+.card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.card p {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 3px;
+}
+
+.card a {
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: underline;
+}
+
+.stored-stats {
+    margin: 10px 0;
+    padding: 10px 12px;
+    background: #0d0d0d;
+    border: 1px solid #222;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #777;
+}
+
+.stored-stats p {
+    margin-bottom: 2px;
+}
+
+.approve-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.approve-row input {
+    background: #0d0d0d;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    padding: 7px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 180px;
+}
+
+.approve-row input:focus {
+    outline: none;
+    border-color: #555;
+}
+
+.approve-btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.approve-btn:hover {
+    opacity: 0.8;
+}
+
+/* ── Calculator ── */
+.calc-hint {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.calc-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.calc-grid .hint {
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #555;
+}
+
+.calc-grid input,
+.calc-grid select {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.calc-grid input:focus,
+.calc-grid select:focus {
+    outline: none;
+    border-color: #555;
+}
+
+#calcBtn {
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 9px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+#calcBtn:hover {
+    opacity: 0.8;
+}
+
+#results {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #fff;
+    display: none;
+    line-height: 1.8;
+}
+
+#results:not(:empty) {
+    display: block;
+}
+
+#results hr {
+    border-color: #222;
+    margin: 8px 0;
+}
+
+#results small {
+    font-size: 11px;
+    color: #666;
+}
+
+@media (max-width: 600px) {
+    .calc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .approve-row input {
+        width: 100%;
+    }
+}
